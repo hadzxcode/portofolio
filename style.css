@@ -3098,3 +3098,16 @@ html[data-theme="light"] .about.is-in .about__moon {
 .chapter--ink .about__doodle--arrow { top: 3.4rem; bottom: auto; right: -.5rem; left: auto; width: clamp(56px, 6vw, 80px); }
 .js .chapter--ink .chapter__head:not(.is-visible) .about__doodle path { stroke-dashoffset: 1; }
 @media (hover: hover) { .chapter--ink .ch:hover { rotate: var(--r); scale: 1.1; translate: 0 -.09em; } }
+
+/* ===== Teks tidak bisa diseleksi (hindari blok biru saat ketuk lama di HP) ===== */
+html, body, body * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, textarea, [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+img, svg { -webkit-user-drag: none; user-drag: none; }
