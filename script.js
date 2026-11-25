@@ -898,3 +898,9 @@ contactForm.addEventListener("submit", async function (event) {
     });
   }
 })();
+
+// Tahun di footer ikut tahun sekarang.
+(function () {
+  var el = document.getElementById("tahun");
+  if (el) el.textContent = new Date().getFullYear();
+})();
