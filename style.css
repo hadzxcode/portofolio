@@ -1753,18 +1753,32 @@ html.is-loading .hero__graffiti {
 
 /* ---------- Skill: editor kode, isinya cuplikan dari website ini ---------- */
 .editor {
+  --tok-tag: var(--color-red);
+  --tok-attr: color-mix(in srgb, var(--color-red) 45%, var(--color-text));
+  --tok-str: #e9c987;
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: 14px;
   background: var(--color-panel);
   box-shadow: 10px 10px 0 var(--lift);
 }
-.editor__tabs { display: flex; overflow-x: auto; border-bottom: 1px solid var(--color-line); background: var(--color-panel-light); }
+html[data-theme="light"] .editor { --tok-str: #9a5b00; }
+
+/* Tab: tab aktif menyatu dengan area kode, ada garis aksen di atasnya */
+.editor__tabs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-panel-light);
+}
+.editor__tabs::-webkit-scrollbar { display: none; }
 .editor__tabs button {
   margin-bottom: -1px;
-  padding: .85rem 1.25rem;
+  padding: .85rem 1.4rem;
   border: 0;
-  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
+  border-right: 1px solid var(--color-line);
   background: none;
   color: var(--color-muted);
   font-size: .9rem;
@@ -1773,25 +1787,50 @@ html.is-loading .hero__graffiti {
   cursor: pointer;
 }
 .editor__tabs button:hover { color: var(--color-text); }
-.editor__tabs button[aria-selected="true"] { border-bottom-color: var(--color-red); color: var(--color-text); }
-.editor__panel[hidden] { display: none; }
-.editor pre {
-  margin: 0;
-  padding: 1.6rem 1.4rem;
-  overflow-x: auto;
-  font: .92rem / 1.9 ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+.editor__tabs button[aria-selected="true"] {
+  border-top-color: var(--color-red);
+  background: var(--color-panel);
   color: var(--color-text);
 }
-.editor code span { display: block; }
-.editor .k { color: var(--color-red); }
-.editor .c { color: var(--color-muted); }
+.editor__panel[hidden] { display: none; }
+
+/* Area kode: ada nomor baris, tinggi tetap supaya tidak melompat antar tab */
+.editor pre {
+  min-height: 17.5rem;
+  margin: 0;
+  padding: 1.4rem 1.4rem 1.4rem 0;
+  overflow-x: auto;
+  font: .95rem / 1.9 ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  color: var(--color-text);
+}
+.editor code { counter-reset: baris; }
+.editor code span { display: block; min-height: 1.9em; white-space: pre; }
+.editor code span::before {
+  counter-increment: baris;
+  content: counter(baris);
+  display: inline-block;
+  width: 3.2rem;
+  padding-right: 1.2rem;
+  color: var(--color-muted);
+  opacity: .55;
+  text-align: right;
+  user-select: none;
+}
+.editor b { font-weight: 400; }
+.editor .k { color: var(--tok-tag); }
+.editor .a { color: var(--tok-attr); }
+.editor .s { color: var(--tok-str); }
+.editor .c { color: var(--color-muted); font-style: italic; }
+
+/* Keterangan bahasa di bawah kode */
 .editor__info {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1.2rem;
   align-items: center;
-  padding: 1.2rem 1.4rem;
+  padding: 1.1rem 1.4rem;
   border-top: 1px solid var(--color-line);
+  background: var(--color-panel-light);
 }
 .editor__info h3 { margin: 0; font: 400 2rem / 1 var(--font-display); text-transform: uppercase; }
 .editor__info p { margin: 0; color: var(--color-muted); }
@@ -2886,9 +2925,14 @@ html[data-theme="light"] .about.is-in .about__moon {
 .editor, .work__frame { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .3s ease-out, box-shadow .3s, translate .3s; }
 .js .editor:not(.is-visible) code span { opacity: 0; }
 .js .editor.is-visible .editor__panel:not([hidden]) code span { animation: line-in .5s cubic-bezier(.2,.7,.2,1) both; }
-.editor code span:nth-child(2) { animation-delay: .12s !important; }
-.editor code span:nth-child(3) { animation-delay: .24s !important; }
-.editor code span:nth-child(4) { animation-delay: .36s !important; }
+.editor code span:nth-child(2) { animation-delay: 0.08s !important; }
+.editor code span:nth-child(3) { animation-delay: 0.16s !important; }
+.editor code span:nth-child(4) { animation-delay: 0.24s !important; }
+.editor code span:nth-child(5) { animation-delay: 0.32s !important; }
+.editor code span:nth-child(6) { animation-delay: 0.40s !important; }
+.editor code span:nth-child(7) { animation-delay: 0.48s !important; }
+.editor code span:nth-child(8) { animation-delay: 0.56s !important; }
+.editor code span:nth-child(9) { animation-delay: 0.64s !important; }
 .editor__panel:not([hidden]) .editor__info > * { animation: line-in .5s .35s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes line-in { from { opacity: 0; translate: -14px 0; } }
 .editor code span:last-child::after { content: ""; display: inline-block; width: .55ch; height: 1.1em; margin-left: 3px; vertical-align: -.2em; background: var(--color-red); animation: caret 1s steps(2) infinite; }
