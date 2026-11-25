@@ -2859,12 +2859,7 @@ html[data-theme="light"] .about.is-in .about__moon {
 .chapter--ink::before { content: ""; position: absolute; top: 0; left: 50%; width: min(1180px, 90%); height: 1px; translate: -50% 0; scale: 0 1;
   background: linear-gradient(90deg, transparent, var(--color-red), transparent); transition: scale 1.1s cubic-bezier(.2,.7,.2,1); }
 .chapter--ink.in-view::before { scale: 1 1; }
-.chapter--ink .chapter__head h2 { transition: clip-path .9s cubic-bezier(.2,.7,.2,1) .1s; }
-.js .chapter--ink .chapter__head:not(.is-visible) h2 { clip-path: inset(-10% 100% -10% 0); }
-.chapter--ink .chapter__head::after { content: ""; display: block; width: 150px; height: 14px; margin-top: 1.3rem; rotate: -1.5deg; background: var(--color-red);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M1 12C20 5 42 9 72 6s60-2 98 2l29-4-7 7 8 4c-38 3-78-1-118 3S28 15 1 17l7-4z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M1 12C20 5 42 9 72 6s60-2 98 2l29-4-7 7 8 4c-38 3-78-1-118 3S28 15 1 17l7-4z'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
-  clip-path: inset(0 100% 0 0); transition: clip-path .8s cubic-bezier(.3,.7,.2,1) .45s; }
-.chapter--ink .chapter__head.is-visible::after { clip-path: inset(0 0 0 0); }
+
 
 /* Anak-anak muncul berurutan */
 .js .st { opacity: 0; translate: 0 26px; transition: opacity .7s cubic-bezier(.2,.7,.2,1) var(--d, 0ms), translate .7s cubic-bezier(.2,.7,.2,1) var(--d, 0ms); }
@@ -2937,7 +2932,7 @@ html[data-theme="light"] .about.is-in .about__moon {
 
 
 @media (prefers-reduced-motion: reduce) {
-  .js .st, .js .chapter--ink .chapter__head:not(.is-visible) h2 { opacity: 1; translate: none; clip-path: none; }
+  .js .st { opacity: 1; translate: none; }
   .editor code span, .editor code span::after, .trail__item::before, .editor__info > * { animation: none !important; }
   .chapter--ink::before { scale: 1 1; }
 }
@@ -3086,3 +3081,20 @@ html[data-theme="light"] .about.is-in .about__moon {
 @media (prefers-reduced-motion: reduce) {
   .site-footer__col a, .site-footer__top, .site-footer__top b { transition: none; }
 }
+
+/* ===== Judul gaya "Still learning, terus berkembang" untuk Pengalaman / Skill / Proyek ===== */
+.chapter--ink { --lift: color-mix(in srgb, var(--color-red) 32%, transparent);
+  --brush: polygon(0 62%, 5% 22%, 17% 48%, 33% 12%, 51% 42%, 69% 16%, 87% 44%, 100% 26%, 97% 78%, 82% 96%, 60% 72%, 41% 100%, 23% 76%, 8% 98%); }
+.chapter--ink .chapter__head h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: .98; letter-spacing: .005em; text-wrap: wrap; }
+.chapter--ink .w { display: inline-block; white-space: nowrap; }
+.chapter--ink .ch { display: inline-block; user-select: none;
+  transition: translate .35s cubic-bezier(.3,1.7,.5,1), rotate .35s cubic-bezier(.3,1.7,.5,1), scale .35s cubic-bezier(.3,1.7,.5,1), filter .3s ease; }
+.js .chapter--ink .chapter__head:not(.is-visible) .ch { opacity: 0; }
+.chapter--ink .chapter__head.is-visible .ch { animation: ch-in .8s cubic-bezier(.2,.9,.2,1) calc(var(--i) * 42ms + .25s) backwards; }
+.chapter--ink .chapter__head.is-visible .ch.is-hop { animation: ch-hop .6s cubic-bezier(.3,1.7,.5,1); }
+.js .chapter--ink .chapter__head:not(.is-visible) .about__brush::after { transform: scaleX(0); }
+.chapter--ink .about__slash { top: 3.4rem; }
+.js .chapter--ink .chapter__head.is-visible .about__slash { animation: about-slash 1.15s cubic-bezier(.6,0,.2,1) .35s both; }
+.chapter--ink .about__doodle--arrow { top: 3.4rem; bottom: auto; right: -.5rem; left: auto; width: clamp(56px, 6vw, 80px); }
+.js .chapter--ink .chapter__head:not(.is-visible) .about__doodle path { stroke-dashoffset: 1; }
+@media (hover: hover) { .chapter--ink .ch:hover { rotate: var(--r); scale: 1.1; translate: 0 -.09em; } }
