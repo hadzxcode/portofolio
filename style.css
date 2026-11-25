@@ -2853,9 +2853,6 @@ html[data-theme="light"] .about.is-in .about__moon {
 .sec-bg__kanji { position: absolute; right: -1%; top: 5%; translate: 0 calc(var(--sp) * -70px); color: transparent;
   font: 400 clamp(12rem, 30vw, 26rem) / 1 "Yuji Boku", "Noto Serif JP", "Yu Mincho", serif;
   -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-red) 24%, transparent); user-select: none; will-change: translate; }
-.sec-bg__star { position: absolute; left: 3%; bottom: 6%; width: clamp(70px, 9vw, 130px); aspect-ratio: 1; rotate: -14deg;
-  background: color-mix(in srgb, var(--color-red) 20%, transparent); translate: 0 calc(var(--sp) * 50px);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 18c8-6 17 0 19 9 9-3 18 4 15 13 8 4 9 14 1 19 4 9-4 17-13 14-3 9-14 11-19 4-7 6-18 2-18-7-9 0-14-10-8-17-7-6-3-17 6-18-1-9 8-15 17-17z'/%3E%3Ccircle cx='13' cy='21' r='5'/%3E%3Ccircle cx='90' cy='72' r='4'/%3E%3Ccircle cx='19' cy='87' r='3'/%3E%3Ccircle cx='86' cy='13' r='3'/%3E%3Cpath d='M46 78h7v17a3.5 3.5 0 0 1-7 0z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 18c8-6 17 0 19 9 9-3 18 4 15 13 8 4 9 14 1 19 4 9-4 17-13 14-3 9-14 11-19 4-7 6-18 2-18-7-9 0-14-10-8-17-7-6-3-17 6-18-1-9 8-15 17-17z'/%3E%3Ccircle cx='13' cy='21' r='5'/%3E%3Ccircle cx='90' cy='72' r='4'/%3E%3Ccircle cx='19' cy='87' r='3'/%3E%3Ccircle cx='86' cy='13' r='3'/%3E%3Cpath d='M46 78h7v17a3.5 3.5 0 0 1-7 0z'/%3E%3C/svg%3E") center / contain no-repeat; }
 @keyframes sec-spin { to { rotate: 360deg; } }
 
 /* Garis tebasan di atas tiap bagian + judul tersingkap seperti sapuan kuas */
@@ -2941,7 +2938,7 @@ html[data-theme="light"] .about.is-in .about__moon {
 
 @media (prefers-reduced-motion: reduce) {
   .js .st, .js .chapter--ink .chapter__head:not(.is-visible) h2 { opacity: 1; translate: none; clip-path: none; }
-  .sec-bg__star, .editor code span, .editor code span::after, .trail__item::before, .editor__info > * { animation: none !important; }
+  .editor code span, .editor code span::after, .trail__item::before, .editor__info > * { animation: none !important; }
   .chapter--ink::before { scale: 1 1; }
 }
 
