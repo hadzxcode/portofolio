@@ -1958,20 +1958,6 @@ html[data-theme="light"] .editor { --tok-str: #9a5b00; }
   will-change: translate;
 }
 
-.about__moon {
-  position: absolute;
-  top: 5%;
-  right: 8%;
-  width: clamp(96px, 11vw, 160px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  box-shadow: inset clamp(-24px, -2vw, -14px) 5px 0 0 #eef4f1;
-  rotate: -12deg;
-  translate: 0 calc(var(--py, 0) * 0.08px);
-  animation: moon-glow 5s ease-in-out infinite alternate;
-  will-change: translate;
-}
-
 .about__birds {
   position: absolute;
   top: 3%;
@@ -2450,14 +2436,6 @@ html[data-theme="light"] .editor { --tok-str: #9a5b00; }
   to { translate: -50% 0; }
 }
 
-/* ---------- Mode siang: bulan jadi matahari, seperti di hero ---------- */
-html[data-theme="light"] .about__moon {
-  background: radial-gradient(circle at 40% 38%, #fffdf0 0%, #ffe9a3 45%, #ffcf5e 100%);
-  box-shadow: 0 0 60px 18px rgba(255, 214, 102, 0.55);
-  rotate: none;
-  animation: sun-glow 5s ease-in-out infinite alternate;
-}
-
 /* ---------- Responsif ---------- */
 @media (max-width: 900px) {
   .about__layout { grid-template-columns: 1fr; }
@@ -2466,7 +2444,6 @@ html[data-theme="light"] .about__moon {
 }
 
 @media (max-width: 640px) {
-  .about__moon { top: 1%; right: 3%; width: 84px; }
   .about__birds { right: 30%; }
   .about__seal { right: -6px; width: 64px; }
   .about__seal b { font-size: 1.8rem; }
@@ -2610,7 +2587,6 @@ html[data-theme="light"] .about__moon {
 }
 
 /* ---------- Latar: muncul dengan dentuman saat bagian masuk layar ---------- */
-.js .about:not(.is-in) .about__moon,
 .js .about:not(.is-in) .about__kanji { opacity: 0; }
 
 .about.is-in .about__kanji {
@@ -2621,22 +2597,6 @@ html[data-theme="light"] .about__moon {
   0% { opacity: 0; rotate: -8deg; scale: 1.7; }
   55% { opacity: 1; rotate: 1deg; scale: 0.96; }
   72% { scale: 1.02; }
-}
-
-.about.is-in .about__moon {
-  animation:
-    moon-glow 5s ease-in-out infinite alternate,
-    moon-rise 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-}
-
-html[data-theme="light"] .about.is-in .about__moon {
-  animation:
-    sun-glow 5s ease-in-out infinite alternate,
-    moon-rise 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-}
-
-@keyframes moon-rise {
-  from { opacity: 0; scale: 0.55; }
 }
 
 /* ---------- Foto: dibuka dengan sapuan cat, ditekan, dikilat ---------- */
