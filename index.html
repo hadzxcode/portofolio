@@ -324,15 +324,15 @@
           <button type="button" role="tab" id="tab-js" aria-selected="false" aria-controls="panel-js" tabindex="-1">script.js</button>
         </div>
         <div class="editor__panel" role="tabpanel" id="panel-html" aria-labelledby="tab-html">
-          <pre><code><span><b class="k">&lt;h1</b> id="hero-title"<b class="k">&gt;</b></span><span>  Halo, saya</span><span><b class="k">&lt;/h1&gt;</b></span><span class="c">&lt;!-- struktur dan konten halaman --&gt;</span></code></pre>
+          <pre><code><span><b class="k">&lt;section</b> <b class="a">class</b>=<b class="s">"hero"</b> <b class="a">id</b>=<b class="s">"home"</b><b class="k">&gt;</b></span><span>  <b class="k">&lt;h1</b> <b class="a">id</b>=<b class="s">"hero-title"</b><b class="k">&gt;</b></span><span>    Halo, saya</span><span>  <b class="k">&lt;/h1&gt;</b></span><span>  <b class="k">&lt;a</b> <b class="a">href</b>=<b class="s">"#project"</b><b class="k">&gt;</b>Lihat proyek<b class="k">&lt;/a&gt;</b></span><span><b class="k">&lt;/section&gt;</b></span><span></span><span class="c">&lt;!-- struktur dan konten halaman --&gt;</span></code></pre>
           <div class="editor__info"><h3>HTML</h3><p>Menyusun struktur dan konten halaman web.</p><a class="text-link" href="https://en.wikipedia.org/wiki/HTML" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
         </div>
         <div class="editor__panel" role="tabpanel" id="panel-css" aria-labelledby="tab-css" hidden>
-          <pre><code><span><b class="k">.hero__title</b> {</span><span>  font-family: var(--font-display);</span><span>  text-transform: uppercase;</span><span>}</span></code></pre>
+          <pre><code><span><b class="k">.hero__title</b> {</span><span>  <b class="a">font-family</b>: var(--font-display);</span><span>  <b class="a">text-transform</b>: uppercase;</span><span>  <b class="a">color</b>: var(--color-text);</span><span>}</span><span></span><span class="c">/* tampilan judul besar di halaman utama */</span></code></pre>
           <div class="editor__info"><h3>CSS</h3><p>Mengatur tampilan, warna, dan tata letak halaman.</p><a class="text-link" href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
         </div>
         <div class="editor__panel" role="tabpanel" id="panel-js" aria-labelledby="tab-js" hidden>
-          <pre><code><span><b class="k">themeButton</b>.addEventListener("click", () =&gt; {</span><span>  applyTheme(next);</span><span>});</span><span class="c">// ganti mode malam dan siang</span></code></pre>
+          <pre><code><span><b class="k">const</b> themeButton = document.<b class="a">querySelector</b>(<b class="s">".theme-toggle"</b>);</span><span></span><span>themeButton.<b class="a">addEventListener</b>(<b class="s">"click"</b>, () =&gt; {</span><span>  <b class="k">const</b> next = mode === <b class="s">"light"</b> ? <b class="s">"dark"</b> : <b class="s">"light"</b>;</span><span>  <b class="a">applyTheme</b>(next);</span><span>});</span><span></span><span class="c">// ganti mode malam dan siang</span></code></pre>
           <div class="editor__info"><h3>JavaScript</h3><p>Mengenal DOM dan membuat interaksi sederhana.</p><a class="text-link" href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
         </div>
       </div>
