@@ -903,9 +903,9 @@ contactForm.addEventListener("submit", async function (event) {
 // ============================================================
 // Kursor kunai: gambar kunai ikut gerak mouse.
 //  - miring 3D mengikuti arah dan kecepatan gerak
-//  - jejak angin biru saat digerakkan cepat
-//  - "menusuk" + cincin kejut + percikan angin saat klik
-// Tampilan (ukuran, cahaya, animasi) diatur di style.css bagian KURSOR KUNAI.
+//  - api biru di jalurnya + sesekali disambar petir saat digerakkan cepat
+//  - "menusuk" + kilatan + ledakan api dan petir saat klik
+// Tampilan (ukuran, warna, animasi) diatur di style.css bagian KURSOR KUNAI.
 // Dilewati di layar sentuh dan kalau pengguna meminta animasi dikurangi.
 // ============================================================
 (function () {
@@ -923,6 +923,11 @@ contactForm.addEventListener("submit", async function (event) {
   gambar.onload = mulai;
   gambar.src = "kunai.png";
 
+  // Angka acak dari kecil sampai besar
+  function acak(kecil, besar) {
+    return kecil + Math.random() * (besar - kecil);
+  }
+
   function mulai() {
     const kunai = document.createElement("div");
     kunai.className = "kunai";
@@ -938,7 +943,7 @@ contactForm.addEventListener("submit", async function (event) {
     let xLama = x, yLama = y;        // posisi mouse di frame sebelumnya
     let lajuX = 0, lajuY = 0;        // kecepatan gerak (sudah dihaluskan)
     let miringX = 0, miringY = 0, putar = 0;
-    let terakhirAngin = 0;
+    let terakhirApi = 0, terakhirPetir = 0;
 
     document.addEventListener("pointermove", function (e) {
       x = e.clientX;
@@ -954,13 +959,15 @@ contactForm.addEventListener("submit", async function (event) {
       kunai.classList.remove("is-show");
     });
 
-    // Klik: kunai menusuk (mengecil), lalu keluar cincin dan percikan angin
+    // Klik: kunai menusuk (mengecil), lalu kilatan, api, dan petir memancar keluar
     document.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
       kunai.classList.add("is-down");
-      buatCincin(e.clientX, e.clientY);
-      for (let i = 0; i < 8; i++) {
-        buatPercikan(e.clientX, e.clientY, (Math.PI * 2 * i) / 8 + Math.random() * 0.4);
+      tambahEfek("kunai-kilat", e.clientX, e.clientY);
+      for (let i = 0; i < 6; i++) {
+        const sudut = (Math.PI * 2 * i) / 6 + acak(-0.3, 0.3);
+        buatPetir(e.clientX, e.clientY, sudut, acak(34, 52));
+        buatApi(e.clientX, e.clientY, true);
       }
     });
     document.addEventListener("pointerup", function () {
@@ -977,6 +984,7 @@ contactForm.addEventListener("submit", async function (event) {
       const dy = y - yLama;
       xLama = x;
       yLama = y;
+      const cepat = Math.hypot(dx, dy);
 
       // Haluskan kecepatan supaya miringnya tidak patah-patah
       lajuX += (dx - lajuX) * 0.2;
@@ -995,10 +1003,15 @@ contactForm.addEventListener("submit", async function (event) {
       kunai.style.setProperty("--sx", batas(5 - lajuX * 0.5, 14).toFixed(1) + "px");
       kunai.style.setProperty("--sy", batas(9 - lajuY * 0.5, 16).toFixed(1) + "px");
 
-      // Jejak angin: hanya saat bergerak cukup cepat, dibatasi tiap 35 milidetik
-      if (Math.hypot(dx, dy) > 5 && waktu - terakhirAngin > 35) {
-        terakhirAngin = waktu;
-        buatAngin(x, y, Math.atan2(dy, dx));
+      // Api biru: tiap 30 milidetik selama mouse bergerak
+      if (cepat > 4 && waktu - terakhirApi > 30) {
+        terakhirApi = waktu;
+        buatApi(x + acak(-3, 3), y + acak(-3, 3), false);
+      }
+      // Petir kecil menyambar badan kunai: lebih jarang, hanya kalau digerakkan cepat
+      if (cepat > 9 && waktu - terakhirPetir > 110) {
+        terakhirPetir = waktu;
+        buatPetir(x + acak(4, 22), y + acak(6, 26), acak(0, Math.PI * 2), acak(14, 26));
       }
       requestAnimationFrame(gerak);
     }
@@ -1017,20 +1030,40 @@ contactForm.addEventListener("submit", async function (event) {
     return el;
   }
 
-  function buatAngin(px, py, sudut) {
-    const el = tambahEfek("kunai-angin", px + (Math.random() * 12 - 6), py + (Math.random() * 12 - 6));
-    el.style.setProperty("--arah", sudut + "rad");
-    el.style.setProperty("--geser", (Math.random() * 20 - 10) + "px");
+  // Api: besar = true untuk ledakan saat klik (menyebar lebih jauh)
+  function buatApi(px, py, besar) {
+    const el = tambahEfek(besar ? "kunai-api is-besar" : "kunai-api", px, py);
+    const sebaran = besar ? 30 : 6;
+    el.style.setProperty("--x", acak(-sebaran, sebaran) + "px");
+    el.style.setProperty("--y", -(besar ? acak(14, 40) : acak(16, 26)) + "px");
   }
 
-  function buatPercikan(px, py, sudut) {
-    const el = tambahEfek("kunai-angin is-percik", px, py);
-    el.style.setProperty("--arah", sudut + "rad");
-    el.style.setProperty("--dx", Math.cos(sudut) * 40 + "px");
-    el.style.setProperty("--dy", Math.sin(sudut) * 40 + "px");
-  }
+  // Petir: garis zig-zag dari titik (px, py) ke arah "sudut" sepanjang "panjang" piksel
+  function buatPetir(px, py, sudut, panjang) {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("class", "kunai-petir");
+    svg.setAttribute("aria-hidden", "true");
+    svg.style.left = px + "px";
+    svg.style.top = py + "px";
+    svg.style.setProperty("--arah", sudut + "rad");
 
-  function buatCincin(px, py) {
-    tambahEfek("kunai-cincin", px, py);
+    // Titik-titik garis: maju lurus, tapi tiap titik digeser acak ke samping = zig-zag
+    const bagian = 5;
+    let titik = "0,0";
+    for (let i = 1; i <= bagian; i++) {
+      const maju = (panjang * i) / bagian;
+      const samping = i === bagian ? 0 : acak(-0.2, 0.2) * panjang;
+      titik += " " + maju.toFixed(1) + "," + samping.toFixed(1);
+    }
+    // Dua garis ditumpuk: yang tebal = cahaya biru, yang tipis = inti putih
+    ["kunai-petir__cahaya", "kunai-petir__inti"].forEach(function (kelas) {
+      const garis = document.createElementNS(ns, "polyline");
+      garis.setAttribute("points", titik);
+      garis.setAttribute("class", kelas);
+      svg.append(garis);
+    });
+    svg.addEventListener("animationend", function () { svg.remove(); });
+    document.body.append(svg);
   }
 })();
