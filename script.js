@@ -341,7 +341,7 @@ contactForm.addEventListener("submit", async function (event) {
     py = event.clientY;
     glow.style.opacity = "1";
     ring.style.opacity = "1";
-    ring.classList.toggle("is-link", !!event.target.closest("a, button, input, textarea, label, .about .ch, .about__stage, .about__seal, .about .facts div, .about__text strong, .about__intro span, .about__ticker"));
+    ring.classList.toggle("is-link", !!event.target.closest("a, button, input, textarea, label, .about .ch, .chapter--ink .ch, .about__stage, .about__seal, .about .facts div, .about__text strong, .about__intro span, .about__ticker"));
   });
   document.documentElement.addEventListener("pointerleave", function () {
     glow.style.opacity = "0";
@@ -545,8 +545,10 @@ contactForm.addEventListener("submit", async function (event) {
   }
 
   // ---------- Judul dipecah per huruf ----------
-  let n = 0;
+  let n = 0, lastHead = null;
   all(".about__line, .about__brush").forEach(function (line) {
+    const head = line.closest(".chapter__head");
+    if (head !== lastHead) { n = 0; lastHead = head; }
     const text = line.textContent.trim().replace(/\s+/g, " ");
     const label = make("visually-hidden");
     const chars = make("about__chars");
