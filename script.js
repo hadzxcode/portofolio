@@ -324,7 +324,7 @@ contactForm.addEventListener("submit", async function (event) {
 
   if (reduce || !fine) return;
 
-  // ---------- Kursor: cahaya lembut yang mengikuti (kursor utamanya kunai, di blok paling bawah file ini) ----------
+  // ---------- Kursor: cahaya lembut yang mengikuti ----------
   const glow = document.createElement("div");
   glow.className = "cursor-glow";
   glow.setAttribute("aria-hidden", "true");
@@ -780,6 +780,7 @@ contactForm.addEventListener("submit", async function (event) {
     });
   }
 })();
+
 // ============================================================
 // Bagian 3-6 + footer: muncul berurutan, garis waktu tergambar,
 // paralaks ringan, miring 3D (mouse), menyala di tengah layar (sentuh).
@@ -898,161 +899,4 @@ contactForm.addEventListener("submit", async function (event) {
     last = now;
     window.__paintSplat(e.clientX, e.clientY, 0.8);
   }, { passive: true });
-})();
-
-// ============================================================
-// Kursor kunai: gambar kunai ikut gerak mouse.
-//  - miring 3D mengikuti arah dan kecepatan gerak
-//  - petir biru SELALU menyambar di sekitar kunai, saat diam maupun bergerak
-//  - "menusuk" + kilatan + petir memancar keluar saat klik
-// Tampilan (ukuran, warna, animasi) diatur di style.css bagian KURSOR KUNAI.
-// Dilewati di layar sentuh dan kalau pengguna meminta animasi dikurangi.
-// ============================================================
-(function () {
-  "use strict";
-  const pakaiMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const kurangiGerak = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!pakaiMouse || kurangiGerak) return;
-
-  // Kolom isian memakai kursor teks asli, jadi kunai disembunyikan di sana
-  const KOLOM = 'input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), textarea';
-  const BISA_DIKLIK = "a, button, label, summary, [role='button'], [role='tab']";
-
-  // Muat gambar dulu. Kalau gagal dimuat, kursor asli tetap dipakai (tidak hilang).
-  const gambar = new Image();
-  gambar.onload = mulai;
-  gambar.src = "kunai.png";
-
-  // Angka acak dari kecil sampai besar
-  function acak(kecil, besar) {
-    return kecil + Math.random() * (besar - kecil);
-  }
-
-  function mulai() {
-    const kunai = document.createElement("div");
-    kunai.className = "kunai";
-    kunai.setAttribute("aria-hidden", "true");
-    gambar.className = "kunai__body";
-    gambar.alt = "";
-    gambar.draggable = false;
-    kunai.append(gambar);
-    document.body.append(kunai);
-    document.documentElement.classList.add("kunai-aktif");
-
-    let x = -200, y = -200;          // posisi mouse sekarang
-    let xLama = x, yLama = y;        // posisi mouse di frame sebelumnya
-    let lajuX = 0, lajuY = 0;        // kecepatan gerak (sudah dihaluskan)
-    let miringX = 0, miringY = 0, putar = 0;
-    let terakhirPetir = 0;
-
-    document.addEventListener("pointermove", function (e) {
-      x = e.clientX;
-      y = e.clientY;
-      kunai.classList.add("is-show");
-      const t = e.target;
-      if (t && t.closest) {
-        kunai.classList.toggle("is-link", !!t.closest(BISA_DIKLIK));
-        kunai.classList.toggle("is-hidden", !!t.closest(KOLOM));
-      }
-    });
-    document.documentElement.addEventListener("pointerleave", function () {
-      kunai.classList.remove("is-show");
-    });
-
-    // Klik: kunai menusuk (mengecil), lalu kilatan dan petir memancar keluar
-    document.addEventListener("pointerdown", function (e) {
-      if (e.button !== 0) return;
-      kunai.classList.add("is-down");
-      tambahEfek("kunai-kilat", e.clientX, e.clientY);
-      for (let i = 0; i < 6; i++) {
-        const sudut = (Math.PI * 2 * i) / 6 + acak(-0.3, 0.3);
-        buatPetir(e.clientX, e.clientY, sudut, acak(34, 52));
-      }
-    });
-    document.addEventListener("pointerup", function () {
-      kunai.classList.remove("is-down");
-    });
-
-    function batas(nilai, maks) {
-      return Math.max(-maks, Math.min(maks, nilai));
-    }
-
-    // Dijalankan terus tiap frame
-    function gerak(waktu) {
-      const dx = x - xLama;
-      const dy = y - yLama;
-      xLama = x;
-      yLama = y;
-      const cepat = Math.hypot(dx, dy);
-
-      // Haluskan kecepatan supaya miringnya tidak patah-patah
-      lajuX += (dx - lajuX) * 0.2;
-      lajuY += (dy - lajuY) * 0.2;
-
-      // Miring 3D: ke kanan -> condong ke kanan, ke bawah -> condong ke bawah
-      miringY += (batas(lajuX * 1.3, 40) - miringY) * 0.15;
-      miringX += (batas(-lajuY * 1.3, 40) - miringX) * 0.15;
-      putar += (batas(lajuX * 0.6, 25) - putar) * 0.15;
-
-      kunai.style.translate = x.toFixed(1) + "px " + y.toFixed(1) + "px";
-      kunai.style.setProperty("--tx", miringX.toFixed(1) + "deg");
-      kunai.style.setProperty("--ty", miringY.toFixed(1) + "deg");
-      kunai.style.setProperty("--tr", putar.toFixed(1) + "deg");
-      // Bayangan bergeser berlawanan arah gerak = kesan ada jarak ke layar
-      kunai.style.setProperty("--sx", batas(5 - lajuX * 0.5, 14).toFixed(1) + "px");
-      kunai.style.setProperty("--sy", batas(9 - lajuY * 0.5, 16).toFixed(1) + "px");
-
-      // Petir menyambar badan kunai terus-menerus, tidak peduli mouse diam atau bergerak.
-      // Jedanya lebih rapat kalau mouse digerakkan cepat. Disembunyikan kalau kunai tidak tampil.
-      const tampil = kunai.classList.contains("is-show") && !kunai.classList.contains("is-hidden");
-      const jeda = cepat > 9 ? 80 : 140;
-      if (tampil && waktu - terakhirPetir > jeda) {
-        terakhirPetir = waktu;
-        buatPetir(x + acak(4, 22), y + acak(6, 26), acak(0, Math.PI * 2), acak(14, 28));
-      }
-      requestAnimationFrame(gerak);
-    }
-    requestAnimationFrame(gerak);
-  }
-
-  // Membuat satu elemen efek, lalu menghapusnya sendiri setelah animasinya selesai
-  function tambahEfek(kelas, px, py) {
-    const el = document.createElement("i");
-    el.className = kelas;
-    el.style.left = px + "px";
-    el.style.top = py + "px";
-    el.setAttribute("aria-hidden", "true");
-    el.addEventListener("animationend", function () { el.remove(); });
-    document.body.append(el);
-    return el;
-  }
-
-  // Petir: garis zig-zag dari titik (px, py) ke arah "sudut" sepanjang "panjang" piksel
-  function buatPetir(px, py, sudut, panjang) {
-    const ns = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("class", "kunai-petir");
-    svg.setAttribute("aria-hidden", "true");
-    svg.style.left = px + "px";
-    svg.style.top = py + "px";
-    svg.style.setProperty("--arah", sudut + "rad");
-
-    // Titik-titik garis: maju lurus, tapi tiap titik digeser acak ke samping = zig-zag
-    const bagian = 5;
-    let titik = "0,0";
-    for (let i = 1; i <= bagian; i++) {
-      const maju = (panjang * i) / bagian;
-      const samping = i === bagian ? 0 : acak(-0.2, 0.2) * panjang;
-      titik += " " + maju.toFixed(1) + "," + samping.toFixed(1);
-    }
-    // Dua garis ditumpuk: yang tebal = cahaya biru, yang tipis = inti putih
-    ["kunai-petir__cahaya", "kunai-petir__inti"].forEach(function (kelas) {
-      const garis = document.createElementNS(ns, "polyline");
-      garis.setAttribute("points", titik);
-      garis.setAttribute("class", kelas);
-      svg.append(garis);
-    });
-    svg.addEventListener("animationend", function () { svg.remove(); });
-    document.body.append(svg);
-  }
 })();
