@@ -3033,8 +3033,8 @@ img, svg { -webkit-user-drag: none; user-drag: none; }
      belum siap atau animasi dimatikan).
    - Kalau JavaScript aktif, <html> diberi class "kunai-aktif": kursor asli
      disembunyikan dan diganti elemen .kunai yang ikut gerak mouse,
-     miring 3D mengikuti arah gerak, meninggalkan jejak angin, dan
-     "menusuk" saat klik. Hanya untuk layar dengan mouse.
+     miring 3D mengikuti arah gerak, meninggalkan jejak api biru, sesekali
+     disambar petir, dan "menusuk" saat klik (ledakan api + petir). Hanya untuk layar dengan mouse.
    - !important dipakai supaya menimpa cursor: pointer di tombol/link.
    ============================================================ */
 @media (hover: hover) and (pointer: fine) {
@@ -3051,7 +3051,7 @@ img, svg { -webkit-user-drag: none; user-drag: none; }
   z-index: 9999;
   top: 0;
   left: 0;
-  width: 72px;
+  width: 44px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -3073,41 +3073,62 @@ img, svg { -webkit-user-drag: none; user-drag: none; }
 .kunai.is-link .kunai__body { scale: 1.18; }
 .kunai.is-down .kunai__body { scale: 0.8; }
 
-/* Jejak angin biru saat mouse digerakkan cepat */
-.kunai-angin {
+/* Api biru: muncul di jalur kunai saat mouse digerakkan, naik lalu padam */
+.kunai-api {
   position: fixed;
   z-index: 9998;
-  width: 46px;
-  height: 3px;
-  margin: -1.5px 0 0 -23px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, transparent, rgba(150, 220, 255, 0.95), #fff);
-  box-shadow: 0 0 8px rgba(90, 200, 255, 0.8);
-  rotate: var(--arah, 0rad);
+  width: 13px;
+  height: 22px;
+  margin: -18px 0 0 -6.5px;
+  /* bentuk lidah api: ujung atas melengkung dan bergerigi */
+  clip-path: polygon(50% 0%, 60% 20%, 76% 32%, 70% 44%, 90% 60%, 80% 86%, 50% 100%, 20% 86%, 10% 60%, 28% 46%, 30% 30%, 42% 22%);
+  /* inti putih di bawah, makin ke ujung makin biru */
+  background: linear-gradient(to top, #fff 0%, #b8ecff 22%, #3fa9ff 58%, #1f5fe0 100%);
   pointer-events: none;
-  animation: angin 0.55s ease-out forwards;
+  animation: api 0.6s ease-out forwards;
 }
-@keyframes angin {
-  to { opacity: 0; scale: 0.25 1; translate: var(--geser, 0px) 0; }
+.kunai-api.is-besar { width: 22px; height: 36px; margin: -30px 0 0 -11px; }
+@keyframes api {
+  to { opacity: 0; scale: 0.25 0.6; translate: var(--x, 0px) var(--y, -22px); }
 }
 
-/* Cipratan angin saat klik: garis memancar keluar + cincin kejut */
-.kunai-angin.is-percik { width: 26px; animation: percik 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
-@keyframes percik {
-  to { opacity: 0; scale: 0.3 1; translate: var(--dx) var(--dy); }
-}
-.kunai-cincin {
+/* Petir: garis zig-zag (digambar JS) yang berkedip lalu hilang */
+.kunai-petir {
   position: fixed;
   z-index: 9998;
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px;
-  border: 2px solid rgba(140, 215, 255, 0.95);
-  border-radius: 50%;
-  box-shadow: 0 0 14px rgba(90, 200, 255, 0.8);
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  transform-origin: 0 0;
+  rotate: var(--arah, 0rad);
+  filter: drop-shadow(0 0 4px #4db8ff);
   pointer-events: none;
-  animation: cincin 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation: petir 0.34s linear forwards;
 }
-@keyframes cincin {
-  to { opacity: 0; scale: 6; border-width: 0.5px; }
+.kunai-petir polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.kunai-petir__cahaya { stroke: #2f9bff; stroke-width: 5; stroke-opacity: 0.55; }
+.kunai-petir__inti { stroke: #e6f7ff; stroke-width: 1.8; }
+@keyframes petir {
+  0% { opacity: 1; }
+  20% { opacity: 0.2; }
+  35% { opacity: 1; }
+  55% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+/* Kilatan cahaya sesaat di titik klik */
+.kunai-kilat {
+  position: fixed;
+  z-index: 9998;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, rgba(140, 215, 255, 0.85) 35%, rgba(47, 155, 255, 0) 70%);
+  pointer-events: none;
+  animation: kilat 0.4s ease-out forwards;
+}
+@keyframes kilat {
+  from { scale: 0.3; }
+  to { opacity: 0; scale: 1.8; }
 }
