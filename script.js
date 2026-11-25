@@ -324,39 +324,27 @@ contactForm.addEventListener("submit", async function (event) {
 
   if (reduce || !fine) return;
 
-  // ---------- Kursor: cahaya + cincin yang mengikuti ----------
+  // ---------- Kursor: cahaya lembut yang mengikuti (kursor utamanya pilox, diatur di CSS) ----------
   const glow = document.createElement("div");
   glow.className = "cursor-glow";
-  const ring = document.createElement("div");
-  ring.className = "cursor-ring";
-  [glow, ring].forEach(function (el) {
-    el.setAttribute("aria-hidden", "true");
-    document.body.append(el);
-  });
+  glow.setAttribute("aria-hidden", "true");
+  document.body.append(glow);
 
-  let px = -100, py = -100, gx = -100, gy = -100, rx = -100, ry = -100;
+  let px = -100, py = -100, gx = -100, gy = -100;
 
   document.addEventListener("pointermove", function (event) {
     px = event.clientX;
     py = event.clientY;
     glow.style.opacity = "1";
-    ring.style.opacity = "1";
-    ring.classList.toggle("is-link", !!event.target.closest("a, button, input, textarea, label, .about .ch, .chapter--ink .ch, .about__stage, .about__seal, .about .facts div, .about__text strong, .about__intro span, .about__ticker"));
   });
   document.documentElement.addEventListener("pointerleave", function () {
     glow.style.opacity = "0";
-    ring.style.opacity = "0";
   });
-  document.addEventListener("pointerdown", function () { ring.classList.add("is-down"); });
-  document.addEventListener("pointerup", function () { ring.classList.remove("is-down"); });
 
   (function followCursor() {
     gx += (px - gx) * 0.08;
     gy += (py - gy) * 0.08;
-    rx += (px - rx) * 0.22;
-    ry += (py - ry) * 0.22;
     glow.style.translate = gx.toFixed(1) + "px " + gy.toFixed(1) + "px";
-    ring.style.translate = rx.toFixed(1) + "px " + ry.toFixed(1) + "px";
     requestAnimationFrame(followCursor);
   })();
 
