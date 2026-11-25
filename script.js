@@ -620,6 +620,9 @@ contactForm.addEventListener("submit", async function (event) {
     if (navigator.vibrate && !fine) navigator.vibrate(10);
   }
 
+  // Dipakai juga oleh seluruh halaman (lihat blok "Cipratan di semua bagian" di bawah).
+  window.__paintSplat = splat;
+
   // ---------- Foto: ketuk = cipratan, sentuh = miring ke arah jari ----------
   const photo = about.querySelector(".about__photo");
   const stage = about.querySelector(".about__stage");
@@ -905,4 +908,34 @@ contactForm.addEventListener("submit", async function (event) {
 (function () {
   var el = document.getElementById("tahun");
   if (el) el.textContent = new Date().getFullYear();
+})();
+
+// ============================================================
+// Cipratan cat di semua bagian: ketuk/klik area kosong mana pun
+// (hero, pengalaman, skill, proyek, kontak, footer) memunculkan cipratan.
+// Dipicu saat jari/mouse dilepas tanpa bergeser, jadi gulir di HP tidak ikut memicu.
+// ============================================================
+(function () {
+  "use strict";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const skip = "a, button, input, textarea, select, label, summary, [role='tab'], .ch, .about__stage, .about__seal, .facts div, .about__ticker, .hero__graffiti, .brand__mark, .site-nav, .menu-button";
+  let down = null, last = 0;
+
+  document.addEventListener("pointerdown", function (e) {
+    down = (e.pointerType === "mouse" && e.button !== 0) || e.target.closest(skip)
+      ? null : { x: e.clientX, y: e.clientY, t: performance.now() };
+  }, { passive: true });
+
+  document.addEventListener("pointerup", function (e) {
+    if (!down || typeof window.__paintSplat !== "function") return;
+    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+    const quick = performance.now() - down.t < 450;
+    down = null;
+    if (moved > 10 || !quick) return;
+    if (String(window.getSelection && window.getSelection()).length) return;
+    const now = performance.now();
+    if (now - last < 140) return;
+    last = now;
+    window.__paintSplat(e.clientX, e.clientY, 0.8);
+  }, { passive: true });
 })();
