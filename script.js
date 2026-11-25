@@ -903,8 +903,8 @@ contactForm.addEventListener("submit", async function (event) {
 // ============================================================
 // Kursor kunai: gambar kunai ikut gerak mouse.
 //  - miring 3D mengikuti arah dan kecepatan gerak
-//  - api biru di jalurnya + sesekali disambar petir saat digerakkan cepat
-//  - "menusuk" + kilatan + ledakan api dan petir saat klik
+//  - petir biru SELALU menyambar di sekitar kunai, saat diam maupun bergerak
+//  - "menusuk" + kilatan + petir memancar keluar saat klik
 // Tampilan (ukuran, warna, animasi) diatur di style.css bagian KURSOR KUNAI.
 // Dilewati di layar sentuh dan kalau pengguna meminta animasi dikurangi.
 // ============================================================
@@ -943,7 +943,7 @@ contactForm.addEventListener("submit", async function (event) {
     let xLama = x, yLama = y;        // posisi mouse di frame sebelumnya
     let lajuX = 0, lajuY = 0;        // kecepatan gerak (sudah dihaluskan)
     let miringX = 0, miringY = 0, putar = 0;
-    let terakhirApi = 0, terakhirPetir = 0;
+    let terakhirPetir = 0;
 
     document.addEventListener("pointermove", function (e) {
       x = e.clientX;
@@ -959,7 +959,7 @@ contactForm.addEventListener("submit", async function (event) {
       kunai.classList.remove("is-show");
     });
 
-    // Klik: kunai menusuk (mengecil), lalu kilatan, api, dan petir memancar keluar
+    // Klik: kunai menusuk (mengecil), lalu kilatan dan petir memancar keluar
     document.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
       kunai.classList.add("is-down");
@@ -967,7 +967,6 @@ contactForm.addEventListener("submit", async function (event) {
       for (let i = 0; i < 6; i++) {
         const sudut = (Math.PI * 2 * i) / 6 + acak(-0.3, 0.3);
         buatPetir(e.clientX, e.clientY, sudut, acak(34, 52));
-        buatApi(e.clientX, e.clientY, true);
       }
     });
     document.addEventListener("pointerup", function () {
@@ -1003,15 +1002,13 @@ contactForm.addEventListener("submit", async function (event) {
       kunai.style.setProperty("--sx", batas(5 - lajuX * 0.5, 14).toFixed(1) + "px");
       kunai.style.setProperty("--sy", batas(9 - lajuY * 0.5, 16).toFixed(1) + "px");
 
-      // Api biru: tiap 30 milidetik selama mouse bergerak
-      if (cepat > 4 && waktu - terakhirApi > 30) {
-        terakhirApi = waktu;
-        buatApi(x + acak(-3, 3), y + acak(-3, 3), false);
-      }
-      // Petir kecil menyambar badan kunai: lebih jarang, hanya kalau digerakkan cepat
-      if (cepat > 9 && waktu - terakhirPetir > 110) {
+      // Petir menyambar badan kunai terus-menerus, tidak peduli mouse diam atau bergerak.
+      // Jedanya lebih rapat kalau mouse digerakkan cepat. Disembunyikan kalau kunai tidak tampil.
+      const tampil = kunai.classList.contains("is-show") && !kunai.classList.contains("is-hidden");
+      const jeda = cepat > 9 ? 80 : 140;
+      if (tampil && waktu - terakhirPetir > jeda) {
         terakhirPetir = waktu;
-        buatPetir(x + acak(4, 22), y + acak(6, 26), acak(0, Math.PI * 2), acak(14, 26));
+        buatPetir(x + acak(4, 22), y + acak(6, 26), acak(0, Math.PI * 2), acak(14, 28));
       }
       requestAnimationFrame(gerak);
     }
@@ -1028,14 +1025,6 @@ contactForm.addEventListener("submit", async function (event) {
     el.addEventListener("animationend", function () { el.remove(); });
     document.body.append(el);
     return el;
-  }
-
-  // Api: besar = true untuk ledakan saat klik (menyebar lebih jauh)
-  function buatApi(px, py, besar) {
-    const el = tambahEfek(besar ? "kunai-api is-besar" : "kunai-api", px, py);
-    const sebaran = besar ? 30 : 6;
-    el.style.setProperty("--x", acak(-sebaran, sebaran) + "px");
-    el.style.setProperty("--y", -(besar ? acak(14, 40) : acak(16, 26)) + "px");
   }
 
   // Petir: garis zig-zag dari titik (px, py) ke arah "sudut" sepanjang "panjang" piksel
