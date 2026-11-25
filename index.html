@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portofolio Jihad — pelajar yang sedang belajar membuat website.">
+   <link rel="icon" type="image/x-icon" href="jihad.png">
+  <script>
+    // Pasang tema sebelum halaman digambar supaya tidak berkedip.
+    (function () {
+      var theme = "dark";
+      try { theme = localStorage.getItem("theme") === "light" ? "light" : "dark"; } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
+      // Layar loading: aktif kecuali pengguna meminta animasi dikurangi.
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce) {
+        document.documentElement.classList.add("is-loading");
+        // Pengaman: kalau skrip utama gagal jalan, loading tetap hilang.
+        setTimeout(function () { document.documentElement.classList.remove("is-loading"); }, 9000);
+      }
+    })();
+  </script>
+  <title>Jihad — Portofolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&amp;text=%E5%BF%8D%E5%AD%A6%E3%81%B3%E3%81%AE%E9%81%93%E5%A3%B1%E5%BC%90%E5%8F%82%E7%B5%8C%E6%8A%80%E4%BD%9C%E6%96%87&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- ========================================================
+       LAYAR LOADING (animasi saat web pertama kali dibuka)
+       Gaya: style.css bagian "LAYAR LOADING". Logika: script.js paling atas.
+       ======================================================== -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__panel preloader__panel--top"></div>
+    <div class="preloader__panel preloader__panel--bottom"></div>
+    <div class="preloader__glow"></div>
+    <div class="preloader__line"></div>
+    <div class="preloader__center">
+      <div class="preloader__logo">
+        <svg viewBox="0 0 100 100" focusable="false"><rect x="2" y="2" width="96" height="96" pathLength="1"/></svg>
+        <span>J</span>
+      </div>
+      <p class="preloader__name">
+        <span style="--i:0">J</span><span style="--i:1">I</span><span style="--i:2">H</span><span style="--i:3">A</span><span style="--i:4">D</span>
+      </p>
+      <div class="preloader__meta">
+        <span>Memuat</span>
+        <span><b class="preloader__count">000</b>%</span>
+      </div>
+      <div class="preloader__bar"><i></i></div>
+    </div>
+  </div>
+
+  <a class="skip-link" href="#konten">Lewati ke konten</a>
+
+  <!-- ========================================================
+       NAVBAR (menu atas)
+       Ubah/tambah menu di <nav class="site-nav">. data-spy harus sama dengan id section.
+       ======================================================== -->
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Jihad, ke halaman utama">
+      <span class="brand__mark" aria-hidden="true">J</span>
+      <span class="brand__text">
+        <strong>JIHAD</strong>
+        <small>Portofolio Web</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigasi">
+      <span class="menu-toggle__label">Menu</span>
+      <span class="menu-toggle__icon" aria-hidden="true"></span>
+    </button>
+
+    <nav class="site-nav" id="navigasi" aria-label="Navigasi utama">
+      <a href="#home" data-spy="home">Home</a>
+      <a href="#about" data-spy="about">Tentang</a>
+      <a href="#experience" data-spy="experience">Pengalaman</a>
+      <a href="#skill" data-spy="skill">Skill</a>
+      <a href="#project" data-spy="project">Proyek</a>
+      <a class="site-nav__contact" href="#contact">Hubungi saya <span aria-hidden="true">↗</span></a>
+    </nav>
+
+    <button class="theme-toggle" type="button" aria-label="Ganti ke mode siang" title="Ganti tema">
+      <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg>
+      <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
+
+  <!-- ========================================================
+       INDIKATOR SAMPING (angka 01-06 di sisi kanan)
+       Tambah section baru? Tambahkan juga satu link di sini.
+       ======================================================== -->
+  <!-- Indikator bagian halaman di sisi kanan. -->
+  <nav class="side-index" aria-label="Bagian halaman">
+    <a href="#home" data-spy="home"><span>01</span></a>
+    <a href="#about" data-spy="about"><span>02</span></a>
+    <a href="#experience" data-spy="experience"><span>03</span></a>
+    <a href="#skill" data-spy="skill"><span>04</span></a>
+    <a href="#project" data-spy="project"><span>05</span></a>
+    <a href="#contact" data-spy="contact"><span>06</span></a>
+  </nav>
+
+  <main id="konten">
+    <!-- ========================================================
+         HALAMAN 1: HERO / HOME (id="home")
+         Isi: judul "Halo, saya", graffiti, tagline, deskripsi, tombol, 3 fitur kecil.
+         ======================================================== -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero__sky" aria-hidden="true"></div>
+      <div class="hero__moon" aria-hidden="true"></div>
+      <svg class="hero__torii" viewBox="0 0 300 220" aria-hidden="true" focusable="false">
+        <path d="M6 34c40 14 90 20 144 20S254 48 294 34l-6 20c-42 14-92 20-138 20S48 68 12 54L6 34Z"/>
+        <rect x="30" y="70" width="240" height="9"/>
+        <rect x="52" y="54" width="14" height="166"/>
+        <rect x="234" y="54" width="14" height="166"/>
+        <rect x="140" y="54" width="20" height="18"/>
+      </svg>
+      <svg class="hero__birds" viewBox="0 0 400 160" aria-hidden="true" focusable="false">
+        <path d="M30 40q10-14 20 0q10-14 20 0q-10-4-20 6q-10-10-20-6Z"/>
+        <path d="M300 20q8-11 16 0q8-11 16 0q-8-3-16 5q-8-8-16-5Z"/>
+        <path d="M200 100q6-8 12 0q6-8 12 0q-6-2-12 4q-6-6-12-4Z"/>
+        <path d="M350 110q5-7 10 0q5-7 10 0q-5-2-10 3q-5-5-10-3Z"/>
+      </svg>
+      <div class="hero__ridge hero__ridge--left" aria-hidden="true"></div>
+      <div class="hero__ridge hero__ridge--right" aria-hidden="true"></div>
+      <div class="hero__fog" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <p class="eyebrow">
+          </span> Pelajar · Belajar web development </span>
+        </p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__line">Halo, saya</span>
+          <img class="hero__graffiti" src="jihad_graffiti.svg" alt="Jihad" width="2127" height="739">
+        </h1>
+        <p class="hero__description">
+          Halo, saya Jihad👋. Selamat datang di website portofolio, tempat saya memamerkan projek-projek saya.
+        </p>
+        <div class="hero__actions">
+          <a class="play-button" href="#project">
+            <span class="play-button__circle" aria-hidden="true"><i></i></span>
+            <span>Lihat proyek</span>
+          </a>
+          <span class="hero__divider" aria-hidden="true"></span>
+          <a class="text-link" href="#about">Kenali saya <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <ul class="hero__features">
+        <!-- SOSMED: ganti USERNAME di setiap href dengan akun kamu. -->
+        <li>
+          <a href="https://www.tiktok.com/@hadzxcode_real" target="_blank" rel="noopener noreferrer" aria-label="TikTok Jihad">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.2a3.6 3.6 0 1 1-3.6-3.6"/><path d="M14 3c.3 2.4 1.9 4 4.4 4.2"/></svg>
+            <span>TikTok</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/jhdalqdsii" target="_blank" rel="noopener noreferrer" aria-label="Instagram Jihad">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg>
+            <span>Instagram</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/jihad-al-qudsi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Jihad">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.8v.1M12 16v-5.5M12 13c0-1.7 1-2.7 2.4-2.7S16.5 11.3 16.5 13V16"/></svg>
+            <span>LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/hadzxcode" target="_blank" rel="noopener noreferrer" aria-label="GitHub Jihad">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+            <span>GitHub</span>
+          </a>
+        </li>
+      </ul>
+
+      <a class="hero__scroll" href="#about" aria-label="Gulir ke bagian tentang saya">
+        <span class="hero__scroll-pill"><i></i></span>
+        <span class="hero__scroll-arrow" aria-hidden="true">↓</span>
+      </a>
+
+      <div class="hero__stamp" aria-hidden="true">
+        <span>学</span>
+        <small>JIHAD</small>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         HALAMAN 2: TENTANG (id="about")
+         Gaya ninja, satu bahasa dengan hero. Isi: latar (bulan, burung, torii,
+         kanji), judul kuas, foto berbingkai (foto-jihad.jpg), kartu fakta
+         bernomor kanji di <dl class="facts">, dan pita teks berjalan.
+         Gaya: style.css bagian "BAGIAN TENTANG". Interaksi: script.js paling bawah.
+         ======================================================== -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about__bg" aria-hidden="true">
+        <div class="about__glow"></div>
+        <div class="about__kanji">忍</div>
+        <div class="about__moon"></div>
+        <svg class="about__birds" viewBox="0 0 400 160" focusable="false">
+          <path d="M30 40q10-14 20 0q10-14 20 0q-10-4-20 6q-10-10-20-6Z"/>
+          <path d="M300 20q8-11 16 0q8-11 16 0q-8-3-16 5q-8-8-16-5Z"/>
+          <path d="M200 100q6-8 12 0q6-8 12 0q-6-2-12 4q-6-6-12-4Z"/>
+          <path d="M350 110q5-7 10 0q5-7 10 0q-5-2-10 3q-5-5-10-3Z"/>
+        </svg>
+        <svg class="about__torii" viewBox="0 0 300 220" focusable="false">
+          <path d="M6 34c40 14 90 20 144 20S254 48 294 34l-6 20c-42 14-92 20-138 20S48 68 12 54L6 34Z"/>
+          <rect x="30" y="70" width="240" height="9"/>
+          <rect x="52" y="54" width="14" height="166"/>
+          <rect x="234" y="54" width="14" height="166"/>
+          <rect x="140" y="54" width="20" height="18"/>
+        </svg>
+      </div>
+
+      <div class="chapter about__wrap">
+        <header class="chapter__head">
+          <div class="eyebrow"><span class="eyebrow__line"></span> 02 · Tentang saya <span class="eyebrow__dot"></span></div>
+          <h2 id="about-title">
+            <span class="about__line">Still learning,</span>
+            <span class="about__brush">terus berkembang</span>
+          </h2>
+          <span class="about__slash" aria-hidden="true"></span>
+          <!-- Doodle graffiti: panah dan kilau yang digambar tangan saat judul muncul -->
+          <svg class="about__doodle about__doodle--arrow" viewBox="0 0 160 130" aria-hidden="true" focusable="false">
+            <path pathLength="1" d="M150 10C108 12 62 30 40 94"/>
+            <path pathLength="1" d="M16 76L40 98L64 74"/>
+          </svg>
+          <svg class="about__doodle about__doodle--star" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <path d="M20 2C21 14 26 19 38 20C26 21 21 26 20 38C19 26 14 21 2 20C14 19 19 14 20 2Z"/>
+          </svg>
+        </header>
+
+        <div class="chapter__body about__layout">
+          <figure class="about__photo">
+            <div class="about__stage">
+              <div class="about__frame">
+                <img src="foto-jihad.jpg" loading="lazy" decoding="async" alt="Jihad berfoto di tempat praktik kerja" width="2576" height="1932">
+                <i class="about__shine" aria-hidden="true"></i>
+                <i class="about__cover" aria-hidden="true"></i>
+                <span class="about__vertical" aria-hidden="true">学びの道</span>
+              </div>
+              <span class="about__seal" aria-hidden="true"><b>忍</b><small>JIHAD</small></span>
+            </div>
+            <figcaption>Belajar langsung dari pengalaman.</figcaption>
+          </figure>
+
+          <div class="about__copy">
+            <p class="about__intro"><small>Saya</small><span>Jihad Al Qudsi</span></p>
+            <p class="about__text">Saat ini saya adalah <strong>mahasiswa semester 3 Sistem Informasi</strong> yang lagi antusias belajar dan ngulik <strong>Web Development</strong>. Berawal dari lulusan <strong>TKJ SMK Muhammadiyah Kudus</strong>, ketertarikan saya di dunia teknologi terus berkembang dari <strong>jaringan komputer</strong> ke <strong>pembuatan website</strong>. Saya senang belajar hal baru dan terus mengasah skill lewat berbagai proyek kecil. Di halaman ini, saya mengumpulkan perjalanan belajar, pengalaman, dan karya yang akan terus bertambah.</p>
+            <dl class="facts">
+              <div data-no="壱"><dt>Sekarang</dt><dd>Semester 3, Sistem Informasi</dd></div>
+              <div data-no="弐"><dt>Asal sekolah</dt><dd>TKJ, SMK Muhammadiyah Kudus</dd></div>
+              <div data-no="参"><dt>Sedang ditekuni</dt><dd>Web development</dd></div>
+            </dl>
+            <a class="text-link" href="#contact">Ada yang ingin ditanyakan? <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pita teks berjalan. Ganti isi <span> sesuka hati, dua set harus sama persis. -->
+      <div class="about__ticker" aria-hidden="true">
+        <div class="about__ticker-track">
+          <span>Web Development</span><span>Sistem Informasi</span><span>Jaringan Komputer</span><span>Still Learning</span>
+          <span>Web Development</span><span>Sistem Informasi</span><span>Jaringan Komputer</span><span>Still Learning</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         HALAMAN 3: PENGALAMAN (id="experience")
+         Salin satu <li class="trail__item"> untuk menambah item (urut dari yang lama).
+         ======================================================== -->
+    <section class="chapter chapter--ink" id="experience" aria-labelledby="experience-title">
+      <div class="sec-bg" aria-hidden="true"><i class="sec-bg__glow"></i><b class="sec-bg__kanji">経</b><i class="sec-bg__star"></i></div>
+      <header class="chapter__head">
+        <h2 id="experience-title">Pengalaman</h2>
+        <p>Sekolah, praktik kerja, dan lomba yang sudah saya jalani.</p>
+      </header>
+      <ol class="chapter__body trail">
+        <li class="trail__item">
+          <time>2022 – 2025</time>
+          <div><span class="tag">Pendidikan</span><h3>SMK Muhammadiyah Kudus</h3><p>Teknik Komputer Jaringan</p></div>
+        </li>
+        <li class="trail__item">
+          <time>Mei – Juli 2024</time>
+          <div><span class="tag">Praktik kerja</span><h3>PT Afresto System Indonesia</h3><p>Data Entry</p></div>
+        </li>
+        <li class="trail__item">
+          <time>Agu – Sep 2024</time>
+          <div><span class="tag">Praktik kerja</span><h3>ITSC Service Center</h3><p>Service Laptop</p></div>
+        </li>
+        <li class="trail__item">
+          <time>2024</time>
+          <div><span class="tag">Lomba</span><h3>LKS – Lomba Kompetensi Siswa</h3><p>Web Technologies</p></div>
+        </li>
+        <li class="trail__item">
+          <time>2024</time>
+          <div><span class="tag">Lomba</span><h3>Olympic Ahmad Dahlan</h3><p>Web Design</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ========================================================
+         HALAMAN 4: SKILL (id="skill")
+         Tiap tab = satu skill. Ganti isi <pre> dan teks di .editor__info.
+         ======================================================== -->
+    <section class="chapter chapter--ink" id="skill" aria-labelledby="skill-title">
+      <div class="sec-bg" aria-hidden="true"><i class="sec-bg__glow"></i><b class="sec-bg__kanji">技</b><i class="sec-bg__star"></i></div>
+      <header class="chapter__head">
+        <h2 id="skill-title">Skill</h2>
+        <p>Dasar yang terus saya latih lewat latihan dan proyek. Cuplikannya dari website ini.</p>
+      </header>
+      <div class="chapter__body editor">
+        <div class="editor__tabs" role="tablist" aria-label="Skill yang sedang dipelajari">
+          <button type="button" role="tab" id="tab-html" aria-selected="true" aria-controls="panel-html">index.html</button>
+          <button type="button" role="tab" id="tab-css" aria-selected="false" aria-controls="panel-css" tabindex="-1">style.css</button>
+          <button type="button" role="tab" id="tab-js" aria-selected="false" aria-controls="panel-js" tabindex="-1">script.js</button>
+        </div>
+        <div class="editor__panel" role="tabpanel" id="panel-html" aria-labelledby="tab-html">
+          <pre><code><span><b class="k">&lt;h1</b> id="hero-title"<b class="k">&gt;</b></span><span>  Halo, saya</span><span><b class="k">&lt;/h1&gt;</b></span><span class="c">&lt;!-- struktur dan konten halaman --&gt;</span></code></pre>
+          <div class="editor__info"><h3>HTML</h3><p>Menyusun struktur dan konten halaman web.</p><a class="text-link" href="https://en.wikipedia.org/wiki/HTML" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="editor__panel" role="tabpanel" id="panel-css" aria-labelledby="tab-css" hidden>
+          <pre><code><span><b class="k">.hero__title</b> {</span><span>  font-family: var(--font-display);</span><span>  text-transform: uppercase;</span><span>}</span></code></pre>
+          <div class="editor__info"><h3>CSS</h3><p>Mengatur tampilan, warna, dan tata letak halaman.</p><a class="text-link" href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="editor__panel" role="tabpanel" id="panel-js" aria-labelledby="tab-js" hidden>
+          <pre><code><span><b class="k">themeButton</b>.addEventListener("click", () =&gt; {</span><span>  applyTheme(next);</span><span>});</span><span class="c">// ganti mode malam dan siang</span></code></pre>
+          <div class="editor__info"><h3>JavaScript</h3><p>Mengenal DOM dan membuat interaksi sederhana.</p><a class="text-link" href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" rel="noopener noreferrer">Baca artikelnya <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         HALAMAN 5: PROYEK (id="project")
+         Salin satu <article class="work"> untuk menambah proyek.
+         ======================================================== -->
+    <section class="chapter chapter--ink" id="project" aria-labelledby="project-title">
+      <div class="sec-bg" aria-hidden="true"><i class="sec-bg__glow"></i><b class="sec-bg__kanji">作</b><i class="sec-bg__star"></i></div>
+      <header class="chapter__head">
+        <h2 id="project-title">Proyek</h2>
+        <p>Hasil dari proses belajar.</p>
+      </header>
+      <article class="chapter__body work">
+        <a class="work__frame" href="https://sorsinggih.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Buka SorSinggih di tab baru">
+          <span class="work__bar" aria-hidden="true"><i></i><i></i><i></i><b>sorsinggih.vercel.app</b></span>
+          <span class="work__screen">
+            <span class="work__fallback" aria-hidden="true">SorSinggih</span>
+            <img src="sorsinggih.webp" alt="Tampilan awal SorSinggih, pelatih tata krama bahasa Bali berbasis AI" width="1400" height="669" loading="lazy" onerror="this.remove()">
+          </span>
+        </a>
+        <div class="work__info">
+          <div>
+            <h3>SorSinggih</h3>
+            <p class="work__lead">Pelatih tata krama bahasa Bali berbasis AI.</p>
+          </div>
+          <div class="work__text">
+            <p>Bahasa Bali punya tingkatan bahasa yang halus, dan salah memilihnya terhadap lawan bicara bisa terasa canggung. SorSinggih hadir sebagai teman latihan. Pengguna memilih lawan bicara, mulai dari teman dekat sampai pemuka agama, lalu belajar bagaimana kata yang tepat disusun, lengkap dengan alasan di balik setiap kata. Tidak perlu login, cukup buka dan mulai.</p>
+            <ul class="work__tags" aria-label="Kata kunci proyek">
+              <li>Web App</li><li>Bahasa Bali</li><li>AI</li><li>Tanpa login</li>
+            </ul>
+            <a class="button button--primary" href="https://sorsinggih.vercel.app" target="_blank" rel="noopener noreferrer">Kunjungi website <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========================================================
+         HALAMAN 6: KONTAK (id="contact")
+         Formulir dikirim lewat FormSubmit; email penerima ada di action.
+         ======================================================== -->
+    <section class="chapter chapter--ink" id="contact" aria-labelledby="contact-title">
+      <div class="sec-bg" aria-hidden="true"><i class="sec-bg__glow"></i><b class="sec-bg__kanji">文</b><i class="sec-bg__star"></i></div>
+      <header class="chapter__head">
+        <h2 id="contact-title">Ada yang ingin kamu tanyakan?</h2>
+        <p>Kirim pesan lewat formulir ini. Pesanmu akan dikirim ke email saya.</p>
+      </header>
+      <form class="chapter__body contact-form" action="https://formsubmit.co/ajax/jihadalqudsi01@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Pesan dari portofolio Jihad">
+        <input type="text" name="_honey" class="contact-form__trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="contact-form__row">
+          <div class="form-field">
+            <label for="nama">Nama</label>
+            <input id="nama" name="nama" type="text" placeholder="Namamu" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="nama@email.com" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="pesan">Pesan</label>
+          <textarea id="pesan" name="pesan" rows="5" placeholder="Tulis pertanyaan atau pesanmu di sini..." required></textarea>
+        </div>
+        <div class="contact-form__footer">
+          <button class="button button--primary" type="submit">Kirim pesan <span aria-hidden="true">↗</span></button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ========================================================
+       FOOTER (bagian paling bawah)
+       ======================================================== -->
+  <footer class="site-footer">
+    <span class="site-footer__mark" aria-hidden="true">JIHAD</span>
+    <a class="brand brand--footer" href="#home">
+      <span class="brand__mark" aria-hidden="true">J</span>
+      <span class="brand__text">
+        <strong>JIHAD</strong>
+        <small>Portofolio Web</small>
+      </span>
+    </a>
+    <p>Dibuat sambil ngeprompt pak 😁.</p>
+    <a class="site-footer__top" href="#home">Kembali ke atas ↑</a>
+  </footer>
+
+</body>
+</html>
