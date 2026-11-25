@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jihadalqudsi.vercel.app/sitemap.xml
+Sitemap: https://jihadalqudsi.my.id/sitemap.xml
