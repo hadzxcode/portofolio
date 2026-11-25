@@ -1751,89 +1751,51 @@ html.is-loading .hero__graffiti {
 .trail h3 { margin: 0; font-size: 1.3rem; line-height: 1.3; }
 .trail p { margin: .15rem 0 0; color: var(--color-muted); }
 
-/* ---------- Skill: editor kode, isinya cuplikan dari website ini ---------- */
-.editor {
-  --tok-tag: var(--color-red);
-  --tok-attr: color-mix(in srgb, var(--color-red) 45%, var(--color-text));
-  --tok-str: #e9c987;
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 14px;
-  background: var(--color-panel);
-  box-shadow: 10px 10px 0 var(--lift);
-}
-html[data-theme="light"] .editor { --tok-str: #9a5b00; }
-
-/* Tab: tab aktif menyatu dengan area kode, ada garis aksen di atasnya */
-.editor__tabs {
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: 1px solid var(--color-line);
-  background: var(--color-panel-light);
-}
-.editor__tabs::-webkit-scrollbar { display: none; }
-.editor__tabs button {
-  margin-bottom: -1px;
-  padding: .85rem 1.4rem;
-  border: 0;
-  border-top: 2px solid transparent;
-  border-right: 1px solid var(--color-line);
-  background: none;
-  color: var(--color-muted);
-  font-size: .9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.editor__tabs button:hover { color: var(--color-text); }
-.editor__tabs button[aria-selected="true"] {
-  border-top-color: var(--color-red);
-  background: var(--color-panel);
-  color: var(--color-text);
-}
-.editor__panel[hidden] { display: none; }
-
-/* Area kode: ada nomor baris, tinggi tetap supaya tidak melompat antar tab */
-.editor pre {
-  min-height: 17.5rem;
-  margin: 0;
-  padding: 1.4rem 1.4rem 1.4rem 0;
-  overflow-x: auto;
-  font: .95rem / 1.9 ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
-  color: var(--color-text);
-}
-.editor code { counter-reset: baris; }
-.editor code span { display: block; min-height: 1.9em; white-space: pre; }
-.editor code span::before {
-  counter-increment: baris;
-  content: counter(baris);
-  display: inline-block;
-  width: 3.2rem;
-  padding-right: 1.2rem;
-  color: var(--color-muted);
-  opacity: .55;
-  text-align: right;
-  user-select: none;
-}
-.editor b { font-weight: 400; }
-.editor .k { color: var(--tok-tag); }
-.editor .a { color: var(--tok-attr); }
-.editor .s { color: var(--tok-str); }
-.editor .c { color: var(--color-muted); font-style: italic; }
-
-/* Keterangan bahasa di bawah kode */
-.editor__info {
+/* ---------- Skill: kartu dengan bar penguasaan ---------- */
+.skills {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 1.2rem;
-  align-items: center;
-  padding: 1.1rem 1.4rem;
-  border-top: 1px solid var(--color-line);
-  background: var(--color-panel-light);
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.editor__info h3 { margin: 0; font: 400 2rem / 1 var(--font-display); text-transform: uppercase; }
-.editor__info p { margin: 0; color: var(--color-muted); }
+.skill {
+  padding: 1.1rem 1.1rem 1.2rem;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-panel-light);
+  transition: border-color .25s, translate .25s;
+}
+.skill:hover { translate: 0 -3px; border-color: color-mix(in srgb, var(--color-red) 55%, transparent); }
+.skill__top { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.3rem; }
+.skill__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.4rem;
+  aspect-ratio: 1;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--color-red) 18%, transparent);
+  color: var(--color-red);
+  font: 400 1rem / 1 var(--font-display);
+  letter-spacing: .02em;
+}
+.skill h3 { margin: 0; font-size: 1.02rem; font-weight: 600; line-height: 1.2; }
+.skill__meta { display: flex; justify-content: space-between; margin-bottom: .5rem; color: var(--color-muted); font-size: .82rem; }
+.skill__meta b { color: var(--color-text); font-weight: 600; }
+.skill__bar { height: 6px; overflow: hidden; border-radius: 99px; background: color-mix(in srgb, var(--color-text) 12%, transparent); }
+.skill__fill {
+  display: block;
+  width: var(--lvl);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-red), var(--color-red-soft));
+  transform-origin: left;
+  transition: scale 1s cubic-bezier(.2, .7, .2, 1) .3s;
+}
+/* bar terisi satu kali saat bagian skill masuk layar */
+.js .chapter--ink:not(.in-view) .skill__fill { scale: 0 1; }
 
 /* ---------- Proyek: jendela browser + keterangan ---------- */
 .work { display: grid; gap: 2.2rem; }
@@ -1909,7 +1871,6 @@ html[data-theme="light"] .editor { --tok-str: #9a5b00; }
   .trail__item::before { left: 0; }
   .trail time { margin-bottom: .3rem; text-align: left; }
   .contact-form__row { grid-template-columns: 1fr; }
-  .editor__info { grid-template-columns: 1fr; gap: .6rem; }
 }
 
 /* ============================================================
@@ -2881,27 +2842,10 @@ html[data-theme="light"] .editor { --tok-str: #9a5b00; }
   .trail__item:hover time { color: var(--color-text); }
 }
 
-/* Skill: baris kode diketik masuk, kursor berkedip, panel miring 3D */
-.editor, .work__frame { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .3s ease-out, box-shadow .3s, translate .3s; }
-.js .editor:not(.is-visible) code span { opacity: 0; }
-.js .editor.is-visible .editor__panel:not([hidden]) code span { animation: line-in .5s cubic-bezier(.2,.7,.2,1) both; }
-.editor code span:nth-child(2) { animation-delay: 0.08s !important; }
-.editor code span:nth-child(3) { animation-delay: 0.16s !important; }
-.editor code span:nth-child(4) { animation-delay: 0.24s !important; }
-.editor code span:nth-child(5) { animation-delay: 0.32s !important; }
-.editor code span:nth-child(6) { animation-delay: 0.40s !important; }
-.editor code span:nth-child(7) { animation-delay: 0.48s !important; }
-.editor code span:nth-child(8) { animation-delay: 0.56s !important; }
-.editor code span:nth-child(9) { animation-delay: 0.64s !important; }
-.editor__panel:not([hidden]) .editor__info > * { animation: line-in .5s .35s cubic-bezier(.2,.7,.2,1) both; }
+/* Proyek: jendela miring 3D mengikuti kursor */
+.work__frame { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .3s ease-out, box-shadow .3s, translate .3s; }
 @keyframes line-in { from { opacity: 0; translate: -14px 0; } }
-.editor code span:last-child::after { content: ""; display: inline-block; width: .55ch; height: 1.1em; margin-left: 3px; vertical-align: -.2em; background: var(--color-red); animation: caret 1s steps(2) infinite; }
-@keyframes caret { 50% { opacity: 0; } }
-.editor__tabs button { transition: color .2s, border-color .25s, background-color .2s, scale .15s; }
-.editor__tabs button:hover { background: color-mix(in srgb, var(--color-red) 8%, transparent); }
-.editor__tabs button:active { scale: .94; }
-.editor { box-shadow: 10px 10px 0 var(--lift); }
-.editor:hover, .work__frame:hover { box-shadow: 14px 14px 0 var(--lift); }
+.work__frame:hover { box-shadow: 14px 14px 0 var(--lift); }
 
 /* Proyek: gambar zoom, kilau menyapu, label "Buka" muncul */
 .work__frame { position: relative; }
@@ -2937,7 +2881,8 @@ html[data-theme="light"] .editor { --tok-str: #9a5b00; }
 
 @media (prefers-reduced-motion: reduce) {
   .js .st { opacity: 1; translate: none; }
-  .editor code span, .editor code span::after, .trail__item::before, .editor__info > * { animation: none !important; }
+  .trail__item::before { animation: none !important; }
+  .skill__fill { transition: none; }
   .chapter--ink::before { scale: 1 1; }
 }
 
