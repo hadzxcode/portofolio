@@ -3033,8 +3033,8 @@ img, svg { -webkit-user-drag: none; user-drag: none; }
      belum siap atau animasi dimatikan).
    - Kalau JavaScript aktif, <html> diberi class "kunai-aktif": kursor asli
      disembunyikan dan diganti elemen .kunai yang ikut gerak mouse,
-     miring 3D mengikuti arah gerak, meninggalkan jejak api biru, sesekali
-     disambar petir, dan "menusuk" saat klik (ledakan api + petir). Hanya untuk layar dengan mouse.
+     miring 3D mengikuti arah gerak, selalu disambar petir biru (diam
+     maupun bergerak), dan "menusuk" saat klik (kilatan + petir memancar). Hanya untuk layar dengan mouse.
    - !important dipakai supaya menimpa cursor: pointer di tombol/link.
    ============================================================ */
 @media (hover: hover) and (pointer: fine) {
@@ -3073,26 +3073,7 @@ img, svg { -webkit-user-drag: none; user-drag: none; }
 .kunai.is-link .kunai__body { scale: 1.18; }
 .kunai.is-down .kunai__body { scale: 0.8; }
 
-/* Api biru: muncul di jalur kunai saat mouse digerakkan, naik lalu padam */
-.kunai-api {
-  position: fixed;
-  z-index: 9998;
-  width: 13px;
-  height: 22px;
-  margin: -18px 0 0 -6.5px;
-  /* bentuk lidah api: ujung atas melengkung dan bergerigi */
-  clip-path: polygon(50% 0%, 60% 20%, 76% 32%, 70% 44%, 90% 60%, 80% 86%, 50% 100%, 20% 86%, 10% 60%, 28% 46%, 30% 30%, 42% 22%);
-  /* inti putih di bawah, makin ke ujung makin biru */
-  background: linear-gradient(to top, #fff 0%, #b8ecff 22%, #3fa9ff 58%, #1f5fe0 100%);
-  pointer-events: none;
-  animation: api 0.6s ease-out forwards;
-}
-.kunai-api.is-besar { width: 22px; height: 36px; margin: -30px 0 0 -11px; }
-@keyframes api {
-  to { opacity: 0; scale: 0.25 0.6; translate: var(--x, 0px) var(--y, -22px); }
-}
-
-/* Petir: garis zig-zag (digambar JS) yang berkedip lalu hilang */
+/* Petir: garis zig-zag (digambar JS) yang berkedip lalu hilang. Selalu muncul di sekitar kunai. */
 .kunai-petir {
   position: fixed;
   z-index: 9998;
