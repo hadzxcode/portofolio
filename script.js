@@ -446,34 +446,6 @@ contactForm.addEventListener("submit", async function (event) {
 })();
 
 // ============================================================
-// Skill: tab "editor kode" (klik atau tombol panah kiri/kanan).
-// ============================================================
-(function () {
-  const tabs = Array.from(document.querySelectorAll('.editor [role="tab"]'));
-  if (!tabs.length) return;
-
-  function select(tab) {
-    tabs.forEach(function (item) {
-      const on = item === tab;
-      item.setAttribute("aria-selected", String(on));
-      item.tabIndex = on ? 0 : -1;
-      document.getElementById(item.getAttribute("aria-controls")).hidden = !on;
-    });
-  }
-
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener("click", function () { select(tab); });
-    tab.addEventListener("keydown", function (event) {
-      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
-      if (!step) return;
-      const next = tabs[(i + step + tabs.length) % tabs.length];
-      next.focus();
-      select(next);
-    });
-  });
-})();
-
-// ============================================================
 // Tentang: paralaks latar (bulan, burung, torii, kanji) mengikuti gulir.
 // Hanya menulis satu variabel --py ke .about; CSS yang menggeser lapisannya.
 // ============================================================
@@ -890,7 +862,7 @@ contactForm.addEventListener("submit", async function (event) {
 
   // Mouse: panel skill dan jendela proyek miring mengikuti kursor
   if (fine && !reduce) {
-    all(".editor, .work__frame").forEach(function (el) {
+    all(".work__frame").forEach(function (el) {
       el.addEventListener("pointermove", function (e) {
         const r = el.getBoundingClientRect();
         el.style.setProperty("--ry", ((e.clientX - r.left) / r.width - 0.5) * 6 + "deg");
