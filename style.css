@@ -88,7 +88,8 @@ img {
   transform: translateY(0);
 }
 
-/* ---------- NAVBAR (menu atas) ---------- */.site-header {
+/* ---------- NAVBAR (menu atas) ---------- */
+.site-header {
   position: absolute;
   z-index: 30;
   top: 0;
@@ -197,7 +198,8 @@ img {
   display: none;
 }
 
-/* ---------- Indikator samping ---------- */.side-index {
+/* ---------- Indikator samping ---------- */
+.side-index {
   position: fixed;
   z-index: 25;
   top: 50%;
@@ -241,7 +243,8 @@ img {
   background: var(--color-red);
 }
 
-/* ---------- HALAMAN 1: HERO / HOME ---------- */.hero {
+/* ---------- HALAMAN 1: HERO / HOME ---------- */
+.hero {
   position: relative;
   display: flex;
   min-height: max(720px, 100svh);
@@ -262,7 +265,8 @@ img {
     linear-gradient(180deg, #1a2626 0%, #0d1517 55%, #070b0d 100%);
 }
 
-/* Bulan sabit */.hero__moon {
+/* Bulan sabit */
+.hero__moon {
   position: absolute;
   z-index: -4;
   top: 9%;
@@ -275,7 +279,8 @@ img {
   filter: drop-shadow(0 0 22px rgba(230, 242, 238, 0.55));
 }
 
-/* Siluet tebing di kedua sisi */.hero__ridge {
+/* Siluet tebing di kedua sisi */
+.hero__ridge {
   position: absolute;
   z-index: -3;
   bottom: 0;
@@ -297,7 +302,8 @@ img {
   clip-path: polygon(0 70%, 22% 48%, 40% 52%, 62% 20%, 80% 8%, 100% 0, 100% 100%, 0 100%);
 }
 
-/* Gerbang torii dan burung */.hero__torii {
+/* Gerbang torii dan burung */
+.hero__torii {
   position: absolute;
   z-index: -3;
   bottom: 14%;
@@ -317,7 +323,8 @@ img {
   opacity: 0.8;
 }
 
-/* Kabut dan gradasi gelap */.hero__fog {
+/* Kabut dan gradasi gelap */
+.hero__fog {
   position: absolute;
   z-index: -1;
   inset: 0;
@@ -482,7 +489,8 @@ img {
   background: var(--color-red-soft);
 }
 
-/* Fitur di bagian bawah hero */.hero__features {
+/* Fitur di bagian bawah hero */
+.hero__features {
   position: absolute;
   bottom: 2.2rem;
   left: clamp(1.25rem, 9vw, 9rem);
@@ -541,7 +549,8 @@ img {
   transform: translateY(-2px) scale(1.1);
 }
 
-/* Penanda gulir di tengah bawah */.hero__scroll {
+/* Penanda gulir di tengah bawah */
+.hero__scroll {
   position: absolute;
   bottom: 1.6rem;
   left: 50%;
@@ -581,7 +590,8 @@ img {
   60% { transform: translateY(8px); opacity: 0.2; }
 }
 
-/* Stempel di kanan bawah */.hero__stamp {
+/* Stempel di kanan bawah */
+.hero__stamp {
   position: absolute;
   right: clamp(1.25rem, 6vw, 6rem);
   bottom: 1.6rem;
@@ -606,18 +616,19 @@ img {
   text-indent: 0.4em;
 }
 
-/* ---------- Responsif ---------- */@media (max-width: 1100px) {
-.hero__scroll {
+/* ---------- Responsif ---------- */
+@media (max-width: 1100px) {
+  .hero__scroll {
     display: none;
   }
 }
 
 @media (max-width: 900px) {
-.side-index {
+  .side-index {
     display: none;
   }
 
-.hero__fog {
+  .hero__fog {
     background:
       linear-gradient(90deg, rgba(7, 11, 13, 0.9) 0%, rgba(7, 11, 13, 0.55) 55%, rgba(7, 11, 13, 0.15) 100%),
       linear-gradient(0deg, rgba(7, 11, 13, 0.95) 0%, rgba(7, 11, 13, 0) 30%);
@@ -625,12 +636,12 @@ img {
 }
 
 @media (max-width: 760px) {
-.site-header {
+  .site-header {
     min-height: 76px;
     padding: 0 1.25rem;
   }
 
-.menu-toggle {
+  .menu-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -641,11 +652,11 @@ img {
     cursor: pointer;
   }
 
-.menu-toggle__label {
+  .menu-toggle__label {
     font-size: 0.82rem;
   }
 
-.menu-toggle__icon,
+  .menu-toggle__icon,
   .menu-toggle__icon::before,
   .menu-toggle__icon::after {
     display: block;
@@ -654,26 +665,26 @@ img {
     background: currentColor;
   }
 
-.menu-toggle__icon {
+  .menu-toggle__icon {
     position: relative;
   }
 
-.menu-toggle__icon::before,
+  .menu-toggle__icon::before,
   .menu-toggle__icon::after {
     position: absolute;
     left: 0;
     content: "";
   }
 
-.menu-toggle__icon::before {
+  .menu-toggle__icon::before {
     top: -6px;
   }
 
-.menu-toggle__icon::after {
+  .menu-toggle__icon::after {
     top: 6px;
   }
 
-.site-nav {
+  .site-nav {
     position: absolute;
     top: calc(100% - 1px);
     right: 0;
@@ -686,94 +697,95 @@ img {
     background: rgba(7, 11, 13, 0.97);
   }
 
-.site-nav.is-open {
+  .site-nav.is-open {
     display: flex;
     flex-direction: column;
   }
 
-.site-nav a {
+  .site-nav a {
     padding: 0.8rem 0;
   }
 
-.site-nav a:not(.site-nav__contact)::after {
+  .site-nav a:not(.site-nav__contact)::after {
     display: none;
   }
 
-.site-nav a.is-active {
+  .site-nav a.is-active {
     color: var(--color-red-soft);
   }
 
-.site-nav .site-nav__contact {
+  .site-nav .site-nav__contact {
     align-self: flex-start;
     margin-top: 0.5rem;
     padding: 0.55rem 1.05rem;
   }
 
-.hero {
+  .hero {
     min-height: max(760px, 100svh);
     align-items: flex-start;
     padding: 8rem 1.25rem 9rem;
   }
 
-.hero__moon {
+  .hero__moon {
     top: 11%;
     left: auto;
     right: 8%;
   }
 
-.hero__features {
+  .hero__features {
     bottom: 1.8rem;
     left: 1.25rem;
   }
 
-.hero__features li {
+  .hero__features li {
     padding: 0 0.9rem;
     font-size: 0.66rem;
   }
 
-.hero__features svg {
+  .hero__features svg {
     width: 18px;
     height: 18px;
   }
 
-.hero__stamp {
+  .hero__stamp {
     display: none;
   }
 }
 
 @media (max-width: 480px) {
-.eyebrow {
+  .eyebrow {
     font-size: 0.66rem;
     letter-spacing: 0.14em;
   }
 
-.hero__description {
+  .hero__description {
     max-width: 330px;
   }
 
-.hero__actions {
+  .hero__actions {
     gap: 1rem;
   }
 
-.hero__divider {
+  .hero__divider {
     display: none;
   }
 
-/* Di layar kecil, sosmed tampil sebagai ikon saja */.hero__features li {
+  /* Di layar kecil, sosmed tampil sebagai ikon saja */
+  .hero__features li {
     padding: 0 0.8rem;
   }
 
-.hero__features li:first-child {
+  .hero__features li:first-child {
     padding-left: 0;
   }
 
-.hero__features li span {
+  .hero__features li span {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-*,
+  *,
   *::before,
   *::after {
     animation: none !important;
@@ -790,7 +802,10 @@ img {
 
 /* ============================================================
    Animasi paralaks dan micro interaction
-   ============================================================ *//* Bar progres gulir */.scroll-progress {
+   ============================================================ */
+
+/* Bar progres gulir */
+.scroll-progress {
   position: fixed;
   z-index: 60;
   top: 0;
@@ -804,7 +819,8 @@ img {
   transform-origin: left;
 }
 
-/* Header: menempel di atas. Saat digulir, berubah jadi kapsul melayang */.site-header {
+/* Header: menempel di atas. Saat digulir, berubah jadi kapsul melayang */
+.site-header {
   position: fixed;
   left: 50%;
   width: 100%;
@@ -837,21 +853,23 @@ img {
   backdrop-filter: blur(16px) saturate(140%);
 }
 
-/* Logo sedikit mengecil di mode kapsul */.site-header.is-scrolled .brand__mark {
+/* Logo sedikit mengecil di mode kapsul */
+.site-header.is-scrolled .brand__mark {
   width: 34px;
   height: 34px;
   font-size: 1.2rem;
 }
 
 @media (max-width: 760px) {
-.site-header.is-scrolled {
+  .site-header.is-scrolled {
     top: 10px;
     width: calc(100% - 1.25rem);
     min-height: 56px;
     padding: 0 1.1rem;
   }
 
-/* Menu dropdown ikut tampil sebagai kartu bulat di bawah kapsul */.site-header.is-scrolled .site-nav {
+  /* Menu dropdown ikut tampil sebagai kartu bulat di bawah kapsul */
+  .site-header.is-scrolled .site-nav {
     top: calc(100% + 10px);
     border: 1px solid rgba(140, 200, 255, 0.22);
     border-radius: 16px;
@@ -862,7 +880,8 @@ img {
   }
 }
 
-/* Layer paralaks hero */.hero__sky { inset: -12% -4% 0; }
+/* Layer paralaks hero */
+.hero__sky { inset: -12% -4% 0; }
 
 .hero__ridge--left { left: -3%; width: 37%; }
 
@@ -877,7 +896,8 @@ img {
   will-change: translate;
 }
 
-/* Animasi masuk hero */@keyframes rise {
+/* Animasi masuk hero */
+@keyframes rise {
   from { opacity: 0; translate: 0 30px; filter: blur(8px); }
   to { opacity: 1; translate: 0 0; filter: blur(0); }
 }
@@ -902,7 +922,8 @@ img {
   animation: rise 1s ease 1.2s both;
 }
 
-/* Graffiti: muncul membal, melayang, membal seperti jelly saat di-hover */@keyframes graffiti-in {
+/* Graffiti: muncul membal, melayang, membal seperti jelly saat di-hover */
+@keyframes graffiti-in {
   from { opacity: 0; transform: scale(0.5) rotate(-14deg); }
   60% { opacity: 1; transform: scale(1.07) rotate(-1deg); }
   to { opacity: 1; transform: scale(1) rotate(-3deg); }
@@ -914,7 +935,8 @@ img {
 }
 
 /* Jelly & pop memakai properti "rotate" dan "scale" (bukan transform),
-   jadi bisa jalan bersamaan dengan float tanpa saling menimpa. */@keyframes jelly {
+   jadi bisa jalan bersamaan dengan float tanpa saling menimpa. */
+@keyframes jelly {
   0%   { scale: 1 1; rotate: 0deg; }
   25%  { scale: 1.14 0.88; rotate: -1.5deg; }
   45%  { scale: 0.95 1.1; rotate: 1deg; }
@@ -924,13 +946,15 @@ img {
 }
 
 /* Hanya keyframe tengah: awal & akhir otomatis mengikuti kondisi elemen
-   (normal atau sedang di-hover), jadi tidak ada lompatan. */@keyframes pop {
+   (normal atau sedang di-hover), jadi tidak ada lompatan. */
+@keyframes pop {
   40% { rotate: -4deg; scale: 1.2; }
 }
 
 /* PENTING: graffiti-in dan float selalu ada di urutan pertama & kedua.
    Hover/klik hanya menambah animasi di urutan ketiga, jadi animasi
-   masuk tidak diulang dari awal (itu penyebab logo sempat hilang). */.hero__graffiti {
+   masuk tidak diulang dari awal (itu penyebab logo sempat hilang). */
+.hero__graffiti {
   cursor: pointer;
   filter:
     drop-shadow(0 0 2px rgba(255, 255, 255, 0.55))
@@ -945,7 +969,8 @@ img {
     float 6s ease-in-out 1.6s infinite;
 }
 
-/* Hover: membal seperti jelly, lalu menetap sedikit lebih besar dan bersinar */.hero__graffiti:hover {
+/* Hover: membal seperti jelly, lalu menetap sedikit lebih besar dan bersinar */
+.hero__graffiti:hover {
   scale: 1.06;
   filter:
     drop-shadow(0 0 3px rgba(255, 255, 255, 0.85))
@@ -965,7 +990,8 @@ img {
     pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
-/* Bulan bercahaya dan burung melayang */@keyframes moon-glow {
+/* Bulan bercahaya dan burung melayang */
+@keyframes moon-glow {
   from { filter: drop-shadow(0 0 16px rgba(230, 242, 238, 0.4)); }
   to { filter: drop-shadow(0 0 38px rgba(230, 242, 238, 0.8)); }
 }
@@ -979,7 +1005,8 @@ img {
 
 .hero__birds { animation: drift 14s ease-in-out infinite alternate; }
 
-/* Muncul saat digulir */.js .reveal {
+/* Muncul saat digulir */
+.js .reveal {
   opacity: 0;
   translate: 0 38px;
   filter: blur(6px);
@@ -998,7 +1025,8 @@ img {
   filter: none;
 }
 
-/* Kursor: kunai (lihat bagian paling bawah) + cahaya lembut yang mengikuti */.cursor-glow {
+/* Cahaya lembut yang mengikuti kursor */
+.cursor-glow {
   position: fixed;
   z-index: 15;
   top: 0;
@@ -1013,7 +1041,8 @@ img {
   transition: opacity 0.4s ease;
 }
 
-/* Tombol: magnetis, riak, panah bergeser */.magnetic { transition: translate 0.18s ease-out, background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
+/* Tombol: magnetis, riak, panah bergeser */
+.magnetic { transition: translate 0.18s ease-out, background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
 
 .ripple-host {
   position: relative;
@@ -1050,7 +1079,8 @@ img {
   box-shadow: 0 10px 30px rgba(114, 180, 245, 0.35);
 }
 
-/* Percikan bintang saat graffiti/logo diklik */.spark {
+/* Percikan bintang saat graffiti/logo diklik */
+.spark {
   position: fixed;
   z-index: 80;
   width: 12px;
@@ -1066,7 +1096,8 @@ img {
   to { translate: var(--dx) var(--dy); scale: 0; opacity: 0; rotate: 180deg; }
 }
 
-/* Logo & indikator samping */.brand__mark {
+/* Logo & indikator samping */
+.brand__mark {
   transition: transform 0.3s ease, background-color 0.25s ease, color 0.25s ease, translate 0.18s ease-out;
 }
 
@@ -1078,17 +1109,20 @@ img {
 
 .side-index a:hover::after { width: 28px; }
 
-/* Matikan kursor tambahan di layar sentuh */@media (hover: none), (pointer: coarse) {
-.cursor-glow { display: none; }
+/* Matikan cahaya kursor di layar sentuh */
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow { display: none; }
 }
 
 /* ============================================================
    Scrollbar kanan (tema biru malam)
-   ============================================================ */html {
+   ============================================================ */
+html {
   scrollbar-gutter: stable;
 }
 
-/* Chrome, Edge, Safari */::-webkit-scrollbar {
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
   width: 14px;
   height: 14px;
 }
@@ -1119,8 +1153,9 @@ img {
   background: var(--color-ink);
 }
 
-/* Firefox (dan browser lain tanpa ::-webkit-scrollbar) */@supports not selector(::-webkit-scrollbar) {
-html {
+/* Firefox (dan browser lain tanpa ::-webkit-scrollbar) */
+@supports not selector(::-webkit-scrollbar) {
+  html {
     scrollbar-width: thin;
     scrollbar-color: #72b4f5 var(--color-ink);
   }
@@ -1128,7 +1163,8 @@ html {
 
 /* ============================================================
    Tombol ganti tema
-   ============================================================ */.theme-toggle {
+   ============================================================ */
+.theme-toggle {
   display: grid;
   flex: none;
   width: 42px;
@@ -1161,14 +1197,15 @@ html {
   stroke-width: 1.7;
 }
 
-/* Mode malam menampilkan ikon matahari (untuk pindah ke siang), mode siang menampilkan bulan */.theme-toggle__moon { display: none; }
+/* Mode malam menampilkan ikon matahari (untuk pindah ke siang), mode siang menampilkan bulan */
+.theme-toggle__moon { display: none; }
 
 html[data-theme="light"] .theme-toggle__sun { display: none; }
 
 html[data-theme="light"] .theme-toggle__moon { display: block; }
 
 @media (max-width: 760px) {
-.theme-toggle {
+  .theme-toggle {
     order: 2;
     width: 38px;
     height: 38px;
@@ -1176,12 +1213,13 @@ html[data-theme="light"] .theme-toggle__moon { display: block; }
     margin-left: auto;
   }
 
-.menu-toggle { order: 3; }
+  .menu-toggle { order: 3; }
 }
 
 /* ============================================================
    MODE SIANG
-   ============================================================ */html[data-theme="light"] {
+   ============================================================ */
+html[data-theme="light"] {
   color-scheme: light;
   --color-ink: #f3f7fc;
   --color-panel: #e7eef7;
@@ -1193,7 +1231,8 @@ html[data-theme="light"] .theme-toggle__moon { display: block; }
   --color-line: rgba(13, 27, 42, 0.16);
 }
 
-/* Header */html[data-theme="light"] .site-nav .site-nav__contact {
+/* Header */
+html[data-theme="light"] .site-nav .site-nav__contact {
   border-color: rgba(13, 27, 42, 0.35);
 }
 
@@ -1210,7 +1249,8 @@ html[data-theme="light"] .scroll-progress {
   box-shadow: 0 0 12px rgba(31, 111, 209, 0.45);
 }
 
-/* Hero: langit siang, matahari, tebing berkabut */html[data-theme="light"] .hero {
+/* Hero: langit siang, matahari, tebing berkabut */
+html[data-theme="light"] .hero {
   background: #cfe4f8;
 }
 
@@ -1257,7 +1297,7 @@ html[data-theme="light"] .hero__fog {
 }
 
 @media (max-width: 900px) {
-html[data-theme="light"] .hero__fog {
+  html[data-theme="light"] .hero__fog {
     background:
       linear-gradient(90deg, rgba(243, 247, 252, 0.9) 0%, rgba(243, 247, 252, 0.6) 55%, rgba(243, 247, 252, 0.2) 100%),
       linear-gradient(0deg, rgba(243, 247, 252, 1) 0%, rgba(243, 247, 252, 0) 30%);
@@ -1310,19 +1350,21 @@ html[data-theme="light"] .button--primary:hover {
   box-shadow: 0 10px 30px rgba(31, 111, 209, 0.3);
 }
 
-/* Menu mobile */@media (max-width: 760px) {
-html[data-theme="light"] .site-nav {
+/* Menu mobile */
+@media (max-width: 760px) {
+  html[data-theme="light"] .site-nav {
     background: rgba(243, 247, 252, 0.97);
   }
 
-html[data-theme="light"] .site-header.is-scrolled .site-nav {
+  html[data-theme="light"] .site-header.is-scrolled .site-nav {
     border-color: rgba(31, 111, 209, 0.25);
     background: rgba(243, 247, 252, 0.94);
     box-shadow: 0 14px 34px rgba(31, 62, 105, 0.22);
   }
 }
 
-/* Scrollbar */html[data-theme="light"] ::-webkit-scrollbar-track {
+/* Scrollbar */
+html[data-theme="light"] ::-webkit-scrollbar-track {
   background:
     linear-gradient(180deg, rgba(31, 111, 209, 0.07), rgba(31, 111, 209, 0) 30%),
     var(--color-ink);
@@ -1335,7 +1377,8 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
 
 /* ============================================================
    LAYAR LOADING
-   ============================================================ */html.is-loading {
+   ============================================================ */
+html.is-loading {
   overflow: hidden;
 }
 
@@ -1353,7 +1396,8 @@ html.is-loading .preloader,
   display: block;
 }
 
-/* Animasi hero ditahan sampai loading selesai */html.is-loading .hero__content > *,
+/* Animasi hero ditahan sampai loading selesai */
+html.is-loading .hero__content > *,
 html.is-loading .hero__features,
 html.is-loading .hero__scroll,
 html.is-loading .hero__stamp,
@@ -1361,7 +1405,8 @@ html.is-loading .hero__graffiti {
   animation-play-state: paused;
 }
 
-/* Dua panel yang terbelah ke atas dan ke bawah */.preloader__panel {
+/* Dua panel yang terbelah ke atas dan ke bawah */
+.preloader__panel {
   position: absolute;
   right: 0;
   left: 0;
@@ -1383,7 +1428,8 @@ html.is-loading .hero__graffiti {
 
 .preloader.is-done .preloader__panel--bottom { transform: translateY(101%); }
 
-/* Cahaya di belakang logo */.preloader__glow {
+/* Cahaya di belakang logo */
+.preloader__glow {
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 38% 34% at 50% 50%, rgba(114, 180, 245, 0.2), transparent 70%);
@@ -1395,7 +1441,8 @@ html.is-loading .hero__graffiti {
   opacity: 0;
 }
 
-/* Garis cahaya yang melebar di belahan panel */.preloader__line {
+/* Garis cahaya yang melebar di belahan panel */
+.preloader__line {
   position: absolute;
   top: 50%;
   right: 0;
@@ -1412,7 +1459,8 @@ html.is-loading .hero__graffiti {
   animation: pl-line 1.2s ease forwards;
 }
 
-/* Isi tengah */.preloader__center {
+/* Isi tengah */
+.preloader__center {
   position: absolute;
   inset: 0;
   display: flex;
@@ -1538,8 +1586,9 @@ html.is-loading .hero__graffiti {
 /* ============================================================
    ANIMASI MENU MOBILE (buka dan tutup, mode siang dan malam)
    Menu tidak lagi muncul mendadak lewat display:none.
-   ============================================================ */@media (max-width: 760px) {
-.site-nav {
+   ============================================================ */
+@media (max-width: 760px) {
+  .site-nav {
     display: flex;
     flex-direction: column;
     visibility: hidden;
@@ -1555,7 +1604,7 @@ html.is-loading .hero__graffiti {
       visibility 0s linear 0.38s;
   }
 
-.site-nav.is-open {
+  .site-nav.is-open {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
@@ -1568,7 +1617,8 @@ html.is-loading .hero__graffiti {
       visibility 0s;
   }
 
-/* Tiap tautan masuk satu per satu dari atas */.site-nav a {
+  /* Tiap tautan masuk satu per satu dari atas */
+  .site-nav a {
     opacity: 0;
     translate: 0 -8px;
     transition:
@@ -1579,7 +1629,7 @@ html.is-loading .hero__graffiti {
       translate 0.2s ease;
   }
 
-.site-nav.is-open a {
+  .site-nav.is-open a {
     opacity: 1;
     translate: 0 0;
     transition:
@@ -1590,33 +1640,34 @@ html.is-loading .hero__graffiti {
       translate 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0s);
   }
 
-.site-nav.is-open a:nth-child(1) { --d: 0.06s; }
+  .site-nav.is-open a:nth-child(1) { --d: 0.06s; }
 
-.site-nav.is-open a:nth-child(2) { --d: 0.10s; }
+  .site-nav.is-open a:nth-child(2) { --d: 0.10s; }
 
-.site-nav.is-open a:nth-child(3) { --d: 0.14s; }
+  .site-nav.is-open a:nth-child(3) { --d: 0.14s; }
 
-.site-nav.is-open a:nth-child(4) { --d: 0.18s; }
+  .site-nav.is-open a:nth-child(4) { --d: 0.18s; }
 
-.site-nav.is-open a:nth-child(5) { --d: 0.22s; }
+  .site-nav.is-open a:nth-child(5) { --d: 0.22s; }
 
-.site-nav.is-open a:nth-child(6) { --d: 0.27s; }
+  .site-nav.is-open a:nth-child(6) { --d: 0.27s; }
 
-/* Hamburger berubah menjadi X, lalu kembali lagi */.menu-toggle__icon,
+  /* Hamburger berubah menjadi X, lalu kembali lagi */
+  .menu-toggle__icon,
   .menu-toggle__icon::before,
   .menu-toggle__icon::after {
     transition: background-color 0.2s ease, top 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), rotate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-.menu-toggle[aria-expanded="true"] .menu-toggle__icon { background: transparent; }
+  .menu-toggle[aria-expanded="true"] .menu-toggle__icon { background: transparent; }
 
-.menu-toggle[aria-expanded="true"] .menu-toggle__icon::before { top: 0; rotate: 45deg; }
+  .menu-toggle[aria-expanded="true"] .menu-toggle__icon::before { top: 0; rotate: 45deg; }
 
-.menu-toggle[aria-expanded="true"] .menu-toggle__icon::after { top: 0; rotate: -45deg; }
+  .menu-toggle[aria-expanded="true"] .menu-toggle__icon::after { top: 0; rotate: -45deg; }
 }
 
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
-.site-nav,
+  .site-nav,
   .site-nav.is-open,
   .site-nav a,
   .site-nav.is-open a {
@@ -1629,8 +1680,9 @@ html.is-loading .hero__graffiti {
 /* ============================================================
    HERO MOBILE: konten utama dan ikon sosmed jadi satu kelompok
    yang berada di tengah layar secara vertikal
-   ============================================================ */@media (max-width: 760px) {
-.hero {
+   ============================================================ */
+@media (max-width: 760px) {
+  .hero {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
@@ -1638,7 +1690,7 @@ html.is-loading .hero__graffiti {
     padding: 6.5rem 1.25rem 3rem;
   }
 
-.hero__features {
+  .hero__features {
     position: static;
     margin-top: 2.6rem;
   }
@@ -2765,6 +2817,7 @@ html.is-loading .hero__graffiti {
 }
 
 .about__ticker { touch-action: pan-y; }
+
 /* ============================================================
    ANIMASI BAGIAN 3-6 + FOOTER (pengalaman, skill, proyek, kontak)
    Ringan: hanya transform/opacity, dijeda saat di luar layar.
@@ -3026,90 +3079,3 @@ input, textarea, [contenteditable="true"] {
   user-select: text;
 }
 img, svg { -webkit-user-drag: none; user-drag: none; }
-
-/* ============================================================
-   KURSOR KUNAI
-   - Kursor cadangan: gambar kunai-cursor.png (dipakai kalau JavaScript
-     belum siap atau animasi dimatikan).
-   - Kalau JavaScript aktif, <html> diberi class "kunai-aktif": kursor asli
-     disembunyikan dan diganti elemen .kunai yang ikut gerak mouse,
-     miring 3D mengikuti arah gerak, selalu disambar petir biru (diam
-     maupun bergerak), dan "menusuk" saat klik (kilatan + petir memancar). Hanya untuk layar dengan mouse.
-   - !important dipakai supaya menimpa cursor: pointer di tombol/link.
-   ============================================================ */
-@media (hover: hover) and (pointer: fine) {
-  html, html * { cursor: url("kunai-cursor.png") 1 1, auto !important; }
-  html.kunai-aktif, html.kunai-aktif * { cursor: none !important; }
-  /* kolom isian tetap pakai kursor teks supaya enak mengetik */
-  input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
-  textarea { cursor: text !important; }
-}
-
-/* Wadah kunai: JS menggeser posisinya lewat "translate" */
-.kunai {
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 44px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-.kunai.is-show { opacity: 1; }
-.kunai.is-hidden { opacity: 0; }
-
-/* Gambar kunai: ujung pisau (pojok kiri atas) jadi titik putar dan titik klik */
-.kunai__body {
-  display: block;
-  width: 100%;
-  height: auto;
-  transform-origin: 0 0;
-  transform: perspective(380px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)) rotate(var(--tr, 0deg));
-  /* bayangan pertama = kedalaman (bergeser saat kunai miring), kedua = cahaya biru */
-  filter: drop-shadow(var(--sx, 5px) var(--sy, 9px) 5px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 9px rgba(90, 200, 255, 0.6));
-  transition: scale 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.kunai.is-link .kunai__body { scale: 1.18; }
-.kunai.is-down .kunai__body { scale: 0.8; }
-
-/* Petir: garis zig-zag (digambar JS) yang berkedip lalu hilang. Selalu muncul di sekitar kunai. */
-.kunai-petir {
-  position: fixed;
-  z-index: 9998;
-  width: 1px;
-  height: 1px;
-  overflow: visible;
-  transform-origin: 0 0;
-  rotate: var(--arah, 0rad);
-  filter: drop-shadow(0 0 4px #4db8ff);
-  pointer-events: none;
-  animation: petir 0.34s linear forwards;
-}
-.kunai-petir polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.kunai-petir__cahaya { stroke: #2f9bff; stroke-width: 5; stroke-opacity: 0.55; }
-.kunai-petir__inti { stroke: #e6f7ff; stroke-width: 1.8; }
-@keyframes petir {
-  0% { opacity: 1; }
-  20% { opacity: 0.2; }
-  35% { opacity: 1; }
-  55% { opacity: 0.3; }
-  100% { opacity: 0; }
-}
-
-/* Kilatan cahaya sesaat di titik klik */
-.kunai-kilat {
-  position: fixed;
-  z-index: 9998;
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, rgba(140, 215, 255, 0.85) 35%, rgba(47, 155, 255, 0) 70%);
-  pointer-events: none;
-  animation: kilat 0.4s ease-out forwards;
-}
-@keyframes kilat {
-  from { scale: 0.3; }
-  to { opacity: 0; scale: 1.8; }
-}
