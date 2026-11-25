@@ -998,7 +998,7 @@ img {
   filter: none;
 }
 
-/* Kursor */.cursor-glow {
+/* Kursor: pilox (lihat bagian paling bawah) + cahaya lembut yang mengikuti */.cursor-glow {
   position: fixed;
   z-index: 15;
   top: 0;
@@ -1011,35 +1011,6 @@ img {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s ease;
-}
-
-.cursor-ring {
-  position: fixed;
-  z-index: 70;
-  top: 0;
-  left: 0;
-  width: 34px;
-  height: 34px;
-  margin: -17px 0 0 -17px;
-  border: 1.5px solid rgba(140, 200, 255, 0.75);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, background-color 0.25s ease, opacity 0.3s ease;
-}
-
-.cursor-ring.is-link {
-  width: 64px;
-  height: 64px;
-  margin: -32px 0 0 -32px;
-  background: rgba(114, 180, 245, 0.14);
-}
-
-.cursor-ring.is-down {
-  width: 22px;
-  height: 22px;
-  margin: -11px 0 0 -11px;
-  background: rgba(114, 180, 245, 0.4);
 }
 
 /* Tombol: magnetis, riak, panah bergeser */.magnetic { transition: translate 0.18s ease-out, background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
@@ -1108,8 +1079,7 @@ img {
 .side-index a:hover::after { width: 28px; }
 
 /* Matikan kursor tambahan di layar sentuh */@media (hover: none), (pointer: coarse) {
-.cursor-glow,
-  .cursor-ring { display: none; }
+.cursor-glow { display: none; }
 }
 
 /* ============================================================
@@ -1330,10 +1300,6 @@ html[data-theme="light"] .hero__stamp {
 
 html[data-theme="light"] .cursor-glow {
   background: radial-gradient(circle, rgba(31, 111, 209, 0.09), transparent 65%);
-}
-
-html[data-theme="light"] .cursor-ring {
-  border-color: rgba(31, 111, 209, 0.75);
 }
 
 html[data-theme="light"] .spark {
@@ -3060,3 +3026,23 @@ input, textarea, [contenteditable="true"] {
   user-select: text;
 }
 img, svg { -webkit-user-drag: none; user-drag: none; }
+
+
+/* ============================================================
+   KURSOR PILOX
+   Gambar kursor = kaleng pilox. Saat klik/tahan, kursor berubah
+   jadi pilox yang menyemprot. Angka "6 4" = titik ujung nozzle
+   (posisi klik sebenarnya). Hanya aktif di layar dengan mouse.
+   !important dipakai supaya menimpa cursor: pointer di tombol/link.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --cursor-pilox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-40 16 16)'%3E%3Crect x='10' y='12' width='12' height='18' rx='2.5' fill='%2372b4f5' stroke='%230d1b2a' stroke-width='1.5'/%3E%3Crect x='10.75' y='18' width='10.5' height='5' fill='%23fff'/%3E%3Crect x='11' y='6' width='10' height='6' rx='1.5' fill='%230d1b2a' stroke='%23fff'/%3E%3Crect x='14' y='2' width='4' height='4' rx='1' fill='%23fff' stroke='%230d1b2a'/%3E%3C/g%3E%3C/svg%3E") 6 4, auto;
+    --cursor-pilox-semprot: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg transform='rotate(-40 16 16)'%3E%3Crect x='10' y='12' width='12' height='18' rx='2.5' fill='%2372b4f5' stroke='%230d1b2a' stroke-width='1.5'/%3E%3Crect x='10.75' y='18' width='10.5' height='5' fill='%23fff'/%3E%3Crect x='11' y='6' width='10' height='6' rx='1.5' fill='%230d1b2a' stroke='%23fff'/%3E%3Crect x='14' y='2' width='4' height='4' rx='1' fill='%23fff' stroke='%230d1b2a'/%3E%3C/g%3E%3Cg fill='%2372b4f5' stroke='%230d1b2a' stroke-width='.6'%3E%3Ccircle cx='3.6' cy='3.2' r='1.5'/%3E%3Ccircle cx='1.8' cy='6.8' r='1.2'/%3E%3Ccircle cx='6.8' cy='1.6' r='1.2'/%3E%3Ccircle cx='1.6' cy='1.6' r='1'/%3E%3C/g%3E%3C/svg%3E") 6 4, auto;
+  }
+  html, html * { cursor: var(--cursor-pilox) !important; }
+  html *:active { cursor: var(--cursor-pilox-semprot) !important; }
+  /* kolom isian tetap pakai kursor teks supaya enak mengetik */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+  textarea { cursor: text !important; }
+}
