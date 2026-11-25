@@ -324,7 +324,7 @@ contactForm.addEventListener("submit", async function (event) {
 
   if (reduce || !fine) return;
 
-  // ---------- Kursor: cahaya lembut yang mengikuti (kursor utamanya pilox, diatur di CSS) ----------
+  // ---------- Kursor: cahaya lembut yang mengikuti (kursor utamanya kunai, di blok paling bawah file ini) ----------
   const glow = document.createElement("div");
   glow.className = "cursor-glow";
   glow.setAttribute("aria-hidden", "true");
@@ -898,4 +898,139 @@ contactForm.addEventListener("submit", async function (event) {
     last = now;
     window.__paintSplat(e.clientX, e.clientY, 0.8);
   }, { passive: true });
+})();
+
+// ============================================================
+// Kursor kunai: gambar kunai ikut gerak mouse.
+//  - miring 3D mengikuti arah dan kecepatan gerak
+//  - jejak angin biru saat digerakkan cepat
+//  - "menusuk" + cincin kejut + percikan angin saat klik
+// Tampilan (ukuran, cahaya, animasi) diatur di style.css bagian KURSOR KUNAI.
+// Dilewati di layar sentuh dan kalau pengguna meminta animasi dikurangi.
+// ============================================================
+(function () {
+  "use strict";
+  const pakaiMouse = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const kurangiGerak = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!pakaiMouse || kurangiGerak) return;
+
+  // Kolom isian memakai kursor teks asli, jadi kunai disembunyikan di sana
+  const KOLOM = 'input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), textarea';
+  const BISA_DIKLIK = "a, button, label, summary, [role='button'], [role='tab']";
+
+  // Muat gambar dulu. Kalau gagal dimuat, kursor asli tetap dipakai (tidak hilang).
+  const gambar = new Image();
+  gambar.onload = mulai;
+  gambar.src = "kunai.png";
+
+  function mulai() {
+    const kunai = document.createElement("div");
+    kunai.className = "kunai";
+    kunai.setAttribute("aria-hidden", "true");
+    gambar.className = "kunai__body";
+    gambar.alt = "";
+    gambar.draggable = false;
+    kunai.append(gambar);
+    document.body.append(kunai);
+    document.documentElement.classList.add("kunai-aktif");
+
+    let x = -200, y = -200;          // posisi mouse sekarang
+    let xLama = x, yLama = y;        // posisi mouse di frame sebelumnya
+    let lajuX = 0, lajuY = 0;        // kecepatan gerak (sudah dihaluskan)
+    let miringX = 0, miringY = 0, putar = 0;
+    let terakhirAngin = 0;
+
+    document.addEventListener("pointermove", function (e) {
+      x = e.clientX;
+      y = e.clientY;
+      kunai.classList.add("is-show");
+      const t = e.target;
+      if (t && t.closest) {
+        kunai.classList.toggle("is-link", !!t.closest(BISA_DIKLIK));
+        kunai.classList.toggle("is-hidden", !!t.closest(KOLOM));
+      }
+    });
+    document.documentElement.addEventListener("pointerleave", function () {
+      kunai.classList.remove("is-show");
+    });
+
+    // Klik: kunai menusuk (mengecil), lalu keluar cincin dan percikan angin
+    document.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      kunai.classList.add("is-down");
+      buatCincin(e.clientX, e.clientY);
+      for (let i = 0; i < 8; i++) {
+        buatPercikan(e.clientX, e.clientY, (Math.PI * 2 * i) / 8 + Math.random() * 0.4);
+      }
+    });
+    document.addEventListener("pointerup", function () {
+      kunai.classList.remove("is-down");
+    });
+
+    function batas(nilai, maks) {
+      return Math.max(-maks, Math.min(maks, nilai));
+    }
+
+    // Dijalankan terus tiap frame
+    function gerak(waktu) {
+      const dx = x - xLama;
+      const dy = y - yLama;
+      xLama = x;
+      yLama = y;
+
+      // Haluskan kecepatan supaya miringnya tidak patah-patah
+      lajuX += (dx - lajuX) * 0.2;
+      lajuY += (dy - lajuY) * 0.2;
+
+      // Miring 3D: ke kanan -> condong ke kanan, ke bawah -> condong ke bawah
+      miringY += (batas(lajuX * 1.3, 40) - miringY) * 0.15;
+      miringX += (batas(-lajuY * 1.3, 40) - miringX) * 0.15;
+      putar += (batas(lajuX * 0.6, 25) - putar) * 0.15;
+
+      kunai.style.translate = x.toFixed(1) + "px " + y.toFixed(1) + "px";
+      kunai.style.setProperty("--tx", miringX.toFixed(1) + "deg");
+      kunai.style.setProperty("--ty", miringY.toFixed(1) + "deg");
+      kunai.style.setProperty("--tr", putar.toFixed(1) + "deg");
+      // Bayangan bergeser berlawanan arah gerak = kesan ada jarak ke layar
+      kunai.style.setProperty("--sx", batas(5 - lajuX * 0.5, 14).toFixed(1) + "px");
+      kunai.style.setProperty("--sy", batas(9 - lajuY * 0.5, 16).toFixed(1) + "px");
+
+      // Jejak angin: hanya saat bergerak cukup cepat, dibatasi tiap 35 milidetik
+      if (Math.hypot(dx, dy) > 5 && waktu - terakhirAngin > 35) {
+        terakhirAngin = waktu;
+        buatAngin(x, y, Math.atan2(dy, dx));
+      }
+      requestAnimationFrame(gerak);
+    }
+    requestAnimationFrame(gerak);
+  }
+
+  // Membuat satu elemen efek, lalu menghapusnya sendiri setelah animasinya selesai
+  function tambahEfek(kelas, px, py) {
+    const el = document.createElement("i");
+    el.className = kelas;
+    el.style.left = px + "px";
+    el.style.top = py + "px";
+    el.setAttribute("aria-hidden", "true");
+    el.addEventListener("animationend", function () { el.remove(); });
+    document.body.append(el);
+    return el;
+  }
+
+  function buatAngin(px, py, sudut) {
+    const el = tambahEfek("kunai-angin", px + (Math.random() * 12 - 6), py + (Math.random() * 12 - 6));
+    el.style.setProperty("--arah", sudut + "rad");
+    el.style.setProperty("--geser", (Math.random() * 20 - 10) + "px");
+  }
+
+  function buatPercikan(px, py, sudut) {
+    const el = tambahEfek("kunai-angin is-percik", px, py);
+    el.style.setProperty("--arah", sudut + "rad");
+    el.style.setProperty("--dx", Math.cos(sudut) * 40 + "px");
+    el.style.setProperty("--dy", Math.sin(sudut) * 40 + "px");
+  }
+
+  function buatCincin(px, py) {
+    tambahEfek("kunai-cincin", px, py);
+  }
 })();
